@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LangChain" Version="0.12.3-dev.140" />
+    <PackageReference Include="LangChain.Databases.Sqlite" Version="0.12.3-dev.140" />
+    <PackageReference Include="LangChain.Providers.Ollama" Version="0.12.3-dev.140" />
+    <PackageReference Include="LangChain.Sources.Abstractions" Version="0.12.3-dev.140" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 

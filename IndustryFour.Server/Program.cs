@@ -19,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<QuotesService>();
+builder.Services.AddSingleton<EmbeddingsService>();
 
 var app = builder.Build();
 

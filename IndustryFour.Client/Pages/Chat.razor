@@ -1,26 +1,22 @@
 ﻿@page "/"
 @page "/chat"
-@using LangChain.Providers.OpenAI.Predefined
+@inject IHttpClientFactory ClientFactory
 
 <PageTitle>Playground Chat</PageTitle>
 
 <div class="container mt-4">
-    <h1>OpenAI Chat</h1>
-    <form id="chatgpt-form">
+    <h1>Chat</h1>
+    <form id="input-form">
         <div class="mb-3">
-            <label for="openai-key" class="form-label">Enter your API key:</label>
-            <input type="text" class="form-control mb-4 m-auto" id="openai-key" @bind="Key" placeholder="sk-yourkeyhere" />
-        </div>
-        <div class="mb-3">
-            <label for="chatgpt-prompt" class="form-label">Enter your prompt:</label>
-            <input type="text" class="form-control mb-4 m-auto" id="chatgpt-prompt" @bind="Prompt"/>
+            <label for="input-prompt" class="form-label">Enter your prompt:</label>
+            <input type="text" class="form-control mb-4 m-auto" id="input-prompt" @bind="Question" />
         </div>
         <button type="button" class="btn btn-success" disabled="@IsTaskRunning" @onclick="Click">Submit</button>
     </form>
-    <div class="mt-4" id="chatgpt-result">
-        @if (Response is not null || Error is not null)
+    <div class="mt-4" id="input-result">
+        @if (Answer is not null || Error is not null)
         {
-            <p style="white-space: pre-line">@Response</p>
+            <p style="white-space: pre-line">@Answer</p>
             <pre>@Error</pre>
         }
     </div>
@@ -29,15 +25,15 @@
 @code
 {
     private string Key { get; set; }
-    private string Prompt { get; set; } = "What are 5 good names for a colorful sock company?";
+    private string Question { get; set; } = "What role did ignition play in the unified namespace?";
     private string Error { get; set; }
-    private string Response { get; set; }
+    private string Answer { get; set; }
     private bool IsTaskRunning { get; set; }
 
     private async Task Click()
     {
         IsTaskRunning = true;
-        Response = "Processing...";
+        Answer = "Processing...";
         Error = null;
 
         // Forces a render
@@ -52,9 +48,8 @@
     {
         try
         {
-            var model = new Gpt4Model(Key);
-            var result = await model.GenerateAsync(Prompt);
-            Response = result.LastMessageContent;
+            var client = ClientFactory.CreateClient("BaseApiUrl");
+            Answer = await client.GetStringAsync($"embeddings/answer?question={Question}");
         }
         catch (Exception ex)
         {

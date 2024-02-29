@@ -19,8 +19,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var client = ClientFactory.CreateClient("QuotesAPI");
+        var client = ClientFactory.CreateClient("BaseApiUrl");
         Quote = await client.GetStringAsync("quotes/random");
     }
-
 }

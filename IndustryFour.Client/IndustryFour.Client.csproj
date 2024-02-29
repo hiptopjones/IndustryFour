@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LangChain" Version="0.12.3-dev.140" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
