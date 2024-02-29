@@ -1,0 +1,26 @@
+﻿@page "/about"
+@inject IHttpClientFactory ClientFactory
+@inject IConfiguration Configuration
+
+<PageTitle>About</PageTitle>
+
+<div class="container mt-4">
+    <h1>About</h1>
+    <p>This is a playground, to provide a simple user interface on top of some ideas.</p>
+
+    <p>
+        <em>"@Quote"</em>
+    </p>
+</div>
+
+@code
+{
+    private string Quote { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = ClientFactory.CreateClient("QuotesAPI");
+        Quote = await client.GetStringAsync("quotes/random");
+    }
+
+}
