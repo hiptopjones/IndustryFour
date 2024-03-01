@@ -23,10 +23,16 @@ namespace IndustryFour.Server.Controllers
             return await _embeddings.GetAnswer(question);
         }
 
-        [HttpPost]
-        public async Task CreateEmbeddings()
+        [HttpPost("transcripts")]
+        public async Task ProcessTranscripts(string directoryPath)
         {
-            await _embeddings.InitializeService();
+            await _embeddings.ProcessTranscripts(directoryPath);
+        }
+
+        [HttpPost("discord")]
+        public async Task ProcessDiscordLogs(string directoryPath)
+        {
+            await _embeddings.ProcessDiscordLogs(directoryPath);
         }
     }
 }
