@@ -1,7 +1,7 @@
 using IndustryFour.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IndustryFour.Server.Controllers
+namespace GenTools.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

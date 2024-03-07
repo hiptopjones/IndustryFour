@@ -1,47 +1,59 @@
+using IndustryFour.Server;
+using IndustryFour.Server.Context;
+using IndustryFour.Server.Interfaces;
+using IndustryFour.Server.Repositories;
 using IndustryFour.Server.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 using NLog;
-using NLog.Extensions.Logging;
-using NLog.Web;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
-
-var logger = LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddLogging(logging =>
-{
-    logging.ClearProviders();
-    logging.SetMinimumLevel(LogLevel.Trace);
-});
+LogManager.Setup().LoadConfigurationFromFile(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
+
+builder.Services.AddControllers();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("https://localhost:5001")
+            builder.AllowAnyOrigin()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
 });
 
-// Add NLog as the logger provider
-builder.Services.AddSingleton<ILoggerProvider, NLogLoggerProvider>();
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.Configure<IISOptions>(options => { });
 
 builder.Services.AddSingleton<QuotesService>();
-builder.Services.AddSingleton<EmbeddingsService>();
+builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
+builder.Services.AddScoped<DocumentStoreDbContext>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+
+builder.Services.AddSqlite<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
+
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -49,4 +61,5 @@ app.UseAuthorization();
 app.UseCors();
 
 app.MapControllers();
+
 app.Run();
