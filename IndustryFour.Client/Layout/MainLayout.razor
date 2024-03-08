@@ -1,19 +1,32 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">IndustryFour</a>
+            <a class="navbar-brand" href="#">Industry 4.0</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/chat">Chat</a>
+                        <a class="nav-link @GetActive("/")" href="/">
+                            Home
+                            <hr/>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link @GetActive("/chat")" href="/chat">
+                            Chat
+                            <hr/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @GetActive("/about")" href="/about">
+                            About
+                            <hr/>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -26,3 +39,13 @@
         @Body
     </div>
 </main>
+
+@code{
+    public string GetActive(string href)
+    {
+        Uri uri = new Uri(NavigationManager.Uri);
+        Console.WriteLine($"NavigationManager: {uri.AbsolutePath} href: {href}");
+
+        return href == uri.AbsolutePath ? "active" : "";
+    }
+}
