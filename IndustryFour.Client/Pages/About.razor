@@ -1,5 +1,5 @@
 ﻿@page "/about"
-@inject IHttpClientFactory ClientFactory
+@inject HttpClient HttpClient
 @inject IConfiguration Configuration
 
 <PageTitle>Industry 4.0 - About</PageTitle>
@@ -19,7 +19,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var client = ClientFactory.CreateClient("BaseApiUrl");
-        Quote = await client.GetStringAsync("quotes/random");
+        Quote = await HttpClient.GetStringAsync("quotes/random");
     }
 }

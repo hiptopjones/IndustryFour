@@ -1,5 +1,5 @@
 ﻿@page "/chat"
-@inject IHttpClientFactory ClientFactory
+@inject HttpClient HttpClient
 
 <PageTitle>Industry 4.0 - Chat</PageTitle>
 
@@ -47,8 +47,7 @@
     {
         try
         {
-            var client = ClientFactory.CreateClient("BaseApiUrl");
-            Answer = await client.GetStringAsync($"embeddings/answer?question={Question}");
+            Answer = await HttpClient.GetStringAsync($"embeddings/answer?question={Question}");
         }
         catch (Exception ex)
         {

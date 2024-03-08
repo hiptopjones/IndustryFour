@@ -1,4 +1,4 @@
-﻿namespace IndustryFour.Server.Dtos.Category
+﻿namespace IndustryFour.Shared.Dtos.Category
 {
     public class CategoryResultDto
     {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IndustryFour.Server.Dtos.Category;
+using IndustryFour.Shared.Dtos.Category;
 using IndustryFour.Server.Interfaces;
 using IndustryFour.Server.Models;
 using Microsoft.AspNetCore.Mvc;

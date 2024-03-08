@@ -26,4 +26,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IndustryFour.Shared\IndustryFour.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

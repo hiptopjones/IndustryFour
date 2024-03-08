@@ -1,0 +1,44 @@
+﻿@if (Documents.Any())
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Title</th>
+				<th scope="col">Author</th>
+				<th scope="col">Category</th>
+				<th scope="col">Update</th>
+				<th scope="col">Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var document in Documents)
+			{
+				<tr>
+					<td class="align-middle">
+						<a href="/documents/@document.Id">
+							@document.Title
+						</a>
+					</td>
+					<td class="align-middle">
+						@document.Author
+					</td>
+					<td class="align-middle">
+						@document.CategoryName
+					</td>
+					<td class="align-middle">
+						<button type="button" class="btn btn-info">Update</button>
+					</td>
+					<td class="align-middle">
+						<button type="button" class="btn btn-danger">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<span>
+		Loading documents...
+	</span>
+}

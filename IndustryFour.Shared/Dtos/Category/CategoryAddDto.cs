@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IndustryFour.Server.Dtos.Category
+namespace IndustryFour.Shared.Dtos.Category
 {
     public class CategoryAddDto
     {

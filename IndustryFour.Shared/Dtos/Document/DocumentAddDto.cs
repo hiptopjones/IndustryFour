@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IndustryFour.Server.Dtos.Document;
+namespace IndustryFour.Shared.Dtos.Document;
 
 public class DocumentAddDto
 {

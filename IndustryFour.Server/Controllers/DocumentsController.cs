@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IndustryFour.Server.Dtos.Document;
+using IndustryFour.Shared.Dtos.Document;
 using IndustryFour.Server.Interfaces;
 using IndustryFour.Server.Models;
 using IndustryFour.Server.Services;
@@ -76,7 +76,7 @@ public class DocumentsController : Controller
             return BadRequest();
         }
 
-        return Ok(_mapper.Map<DocumentResultDto>(documentResult));
+        return CreatedAtAction(nameof(GetById), new { id = documentResult.Id }, documentResult);
     }
 
     [HttpPut("{id:int}")]

@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link @GetActive("/")" href="/">
+                        <a class="nav-link @GetActive("/", isPrefixMatch: false)" href="/">
                             Home
                             <hr/>
                         </a>
@@ -20,6 +20,12 @@
                         <a class="nav-link @GetActive("/chat")" href="/chat">
                             Chat
                             <hr/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @GetActive("/documents")" href="/documents">
+                            Documents
+                            <hr />
                         </a>
                     </li>
                     <li class="nav-item">
@@ -41,11 +47,16 @@
 </main>
 
 @code{
-    public string GetActive(string href)
+    public string GetActive(string href, bool isPrefixMatch = true)
     {
         Uri uri = new Uri(NavigationManager.Uri);
-        Console.WriteLine($"NavigationManager: {uri.AbsolutePath} href: {href}");
-
-        return href == uri.AbsolutePath ? "active" : "";
+        if (isPrefixMatch)
+        {
+            return uri.AbsolutePath.StartsWith(href) ? "active" : string.Empty;
+        }
+        else
+        {
+            return uri.AbsolutePath == href ? "active" : string.Empty;
+        }
     }
 }

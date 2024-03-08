@@ -18,5 +18,19 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .HasForeignKey(b => b.CategoryId);
 
         builder.ToTable("Categories");
-    }
+
+		builder.HasData
+		(
+			new Category
+			{
+				Id = 1,
+				Name = "Podcast Transcript"
+			},
+			new Category
+			{
+				Id = 2,
+				Name = "LinkedIn Post"
+			}
+		);
+	}
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using IndustryFour.Server.Dtos.Category;
-using IndustryFour.Server.Dtos.Document;
+using IndustryFour.Shared.Dtos.Category;
+using IndustryFour.Shared.Dtos.Document;
 using IndustryFour.Server.Models;
 
 namespace IndustryFour.Server

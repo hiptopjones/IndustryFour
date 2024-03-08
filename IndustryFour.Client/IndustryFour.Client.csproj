@@ -7,9 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\Document\**" />
+    <Content Remove="Components\Document\**" />
+    <EmbeddedResource Remove="Components\Document\**" />
+    <None Remove="Components\Document\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IndustryFour.Shared\IndustryFour.Shared.csproj" />
   </ItemGroup>
 
 </Project>
