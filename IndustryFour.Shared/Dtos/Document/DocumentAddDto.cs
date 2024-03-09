@@ -22,4 +22,5 @@ public class DocumentAddDto
 
     [Required(ErrorMessage = "The field {0} is required")]
     public DateTime PublishDate { get; set; }
+    public string SourceUrl { get; set; }
 }

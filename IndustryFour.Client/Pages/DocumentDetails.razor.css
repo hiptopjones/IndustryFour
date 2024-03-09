@@ -1,0 +1,10 @@
+﻿.document-description {
+    font-style: italic;
+    white-space: pre-line;
+}
+
+.document-content {
+    border: 1px dotted gray;
+    background-color: #fdfdfd;
+    white-space: pre-line;
+}

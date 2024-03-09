@@ -13,7 +13,7 @@ namespace IndustryFour.Client.Pages
 
         protected async override Task OnInitializedAsync()
         {
-            DocumentResults = await DocumentRepository.GetAll();
+            DocumentResults = await DocumentRepository.GetDocuments();
 
             foreach (var document in DocumentResults)
             {

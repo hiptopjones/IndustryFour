@@ -1,0 +1,48 @@
+﻿@page "/documents/{documentId:int}"
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h2>@Document.Title</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span class="document-description">
+                    @Document.Description
+                </span>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col">
+                <strong>Category:</strong> @Document.CategoryName
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Author:</strong> @Document.Author
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>URL:</strong> <a href="@Document.SourceUrl" target="_blank">@Document.SourceUrl</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Content:</strong>
+                <br/>
+                <div class="document-content p-2">
+                    @Document.Content
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col">
+        <a href="/documents" class="btn btn-success">Back</a>
+    </div>
+</div>

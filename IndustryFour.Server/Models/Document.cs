@@ -6,6 +6,7 @@ public class Document : Entity
     public string Author { get; set; }
     public string Description { get; set; }
     public string Content { get; set; }
+    public string SourceUrl { get; set; }
     public DateTime PublishDate { get; set; }
     public int CategoryId { get; set; }
 

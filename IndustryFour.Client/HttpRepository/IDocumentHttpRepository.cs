@@ -4,6 +4,9 @@ namespace IndustryFour.Client.HttpRepository
 {
     public interface IDocumentHttpRepository
     {
-        Task<List<DocumentResultDto>> GetAll();
-    }
+        Task<List<DocumentResultDto>> GetDocuments();
+        Task<DocumentResultDto> GetDocument(int id);
+
+
+	}
 }
