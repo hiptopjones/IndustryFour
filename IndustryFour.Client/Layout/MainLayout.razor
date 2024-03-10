@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazored.Toast.Configuration
+@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 
 <header>
@@ -40,10 +41,16 @@
     </nav>
 </header>
 
-<main>
-    <div class="container mt-4">
+<main class="mt-4">
+    <div class="container">
         @Body
     </div>
+
+    <BlazoredToasts Position="ToastPosition.BottomRight"
+                    Timeout="10"
+                    IconType="IconType.FontAwesome"
+                    SuccessIcon="oi oi-thumb-up"
+                    ErrorIcon="oi oi-bug"/>
 </main>
 
 @code{

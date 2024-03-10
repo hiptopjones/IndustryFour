@@ -23,5 +23,10 @@ namespace IndustryFour.Client.HttpRepository
 			var document = await _client.GetFromJsonAsync<DocumentResultDto>($"documents/{id}");
 			return document;
 		}
-	}
+
+        public async Task CreateDocument(DocumentAddDto document)
+        {
+            await _client.PostAsJsonAsync("documents", document);
+        }
+    }
 }

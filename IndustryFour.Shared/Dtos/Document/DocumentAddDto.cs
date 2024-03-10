@@ -4,23 +4,23 @@ namespace IndustryFour.Shared.Dtos.Document;
 
 public class DocumentAddDto
 {
-    [Required(ErrorMessage = "The field {0} is required")]
+    [Required(ErrorMessage = "{0} is a required field")]
     public int CategoryId { get; set; }
 
-    [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(150, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 2)]
+    [Required(ErrorMessage = "{0} is a required field")]
+    [StringLength(150, ErrorMessage = "{0} must be between {2} and {1} characters", MinimumLength = 2)]
     public string Title { get; set; }
 
-    [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(150, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 2)]
+    [Required(ErrorMessage = "{0} is a required field")]
+    [StringLength(150, ErrorMessage = "{0} must be between {2} and {1} characters", MinimumLength = 2)]
     public string Author { get; set; }
 
     public string Description { get; set; }
 
-    [Required(ErrorMessage = "The field {0} is required")]
+    [Required(ErrorMessage = "{0} is a required field")]
     public string Content { get; set; }
 
-    [Required(ErrorMessage = "The field {0} is required")]
+    [Required(ErrorMessage = "{0} is a required field")]
     public DateTime PublishDate { get; set; }
     public string SourceUrl { get; set; }
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IndustryFour.Server.Migrations
 {
     [DbContext(typeof(DocumentStoreDbContext))]
-    [Migration("20240309061145_DatabaseCreate")]
+    [Migration("20240310023310_DatabaseCreate")]
     partial class DatabaseCreate
     {
         /// <inheritdoc />
@@ -104,6 +104,17 @@ namespace IndustryFour.Server.Migrations
                             PublishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SourceUrl = "https://www.linkedin.com/posts/4point0solutions_activity-7171598828813447168-fuPG",
                             Title = "4.0 Solutions LinkedIn Post"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Author = "4.0 Solutions",
+                            CategoryId = 2,
+                            Content = "Becoming an IIoT System Integrator\r\n\r\nIndustry 4.0 and the Industrial Internet of Things (IIoT) are reshaping industry, aspiring controls engineers and technologists often wonder, \"What should I study to excel in IIoT and lead digital transformation projects?\" We will offer our insights into this journey, emphasizing that the path to becoming an IIoT system integrator is both unique and challenging.\r\n\r\nThe Essence of an IIoT Engineer:\r\n\r\nInnate Curiosity: The best IIoT engineers are those with an inherent desire to understand how things work. They are the ones who dismantled their toys on Christmas morning to see how they worked, not just content with the surface-level interaction.\r\n\r\n* Diverse Experience: Exposure to various industries and technologies is crucial. From mastering the art of controls in a salt mine to navigating the complexities of DCS in printing and steel, each step adds a layer of expertise.\r\n\r\n* Self-driven Projects: The journey involves more than just formal education. It's about seizing opportunities to create, innovate, and implement solutions that no one has asked for, but everyone needs.\r\n\r\n* Continuous Learning: The field of IIoT is ever evolving, making continuous learning through platforms like Udemy, obtaining certifications, and practical experience indispensable.\r\n\r\nWhat Works:\r\nJoin a mentorship program, immerse yourself in the industry, and connect with those who are already where you aspire to be. Remember, IIoT engineers are not just educated; they are born with a certain way of thinking and refined through a myriad of experiences.\r\n\r\nBecoming a world-class IIoT system integrator is not a straightforward path. It requires a blend of innate curiosity, diverse industrial experiences, a proactive approach to learning, and the courage to venture into the unknown.",
+                            Description = "",
+                            PublishDate = new DateTime(2024, 3, 9, 17, 36, 43, 386, DateTimeKind.Local),
+                            SourceUrl = "https://www.linkedin.com/posts/4point0solutions_iiot-industry40-digitaltransformation-activity-7171928431809552384-UaFP",
+                            Title = "Becoming an IIoT System Integrator"
                         });
                 });
 

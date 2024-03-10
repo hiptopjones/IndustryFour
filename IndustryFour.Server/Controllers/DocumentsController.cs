@@ -11,14 +11,17 @@ namespace IndustryFour.Server.Controllers;
 [ApiController]
 public class DocumentsController : Controller
 {
-
+    private readonly ILoggerManager _logger;
     private readonly IDocumentService _documentService;
     private readonly IMapper _mapper;
 
-    public DocumentsController(IMapper mapper, IDocumentService documentService)
+    public DocumentsController(IMapper mapper, IDocumentService documentService, ILoggerManager logger)
     {
         _mapper = mapper;
         _documentService = documentService;
+        _logger = logger;
+
+        _logger.LogInfo("Instantiated DocumentsController");
     }
 
     [HttpGet]
@@ -64,8 +67,11 @@ public class DocumentsController : Controller
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(DocumentAddDto documentDto)
     {
+        // TODO: Evaluate these automatic model validations
+        // https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-8.0#automatic-http-400-responses
         if (!ModelState.IsValid)
         {
+            _logger.LogError("Invalid model state: " + ModelState.ToString());
             return BadRequest();
         }
 
@@ -73,6 +79,7 @@ public class DocumentsController : Controller
         var documentResult = await _documentService.Add(document);
         if (documentResult == null)
         {
+            _logger.LogError("Error creating document");
             return BadRequest();
         }
 

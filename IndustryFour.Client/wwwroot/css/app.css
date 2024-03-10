@@ -8,6 +8,14 @@ h1:focus {
 
 /* Blazor styles */
 
+.invalid {
+    border-color: red;
+}
+
+.validation-message {
+    color: red;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
