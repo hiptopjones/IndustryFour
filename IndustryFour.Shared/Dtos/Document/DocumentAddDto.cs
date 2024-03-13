@@ -18,7 +18,7 @@ public class DocumentAddDto
     public string Description { get; set; }
 
     [Required(ErrorMessage = "{0} is a required field")]
-    public string Content { get; set; }
+    public string ContentUrl { get; set; }
 
     [Required(ErrorMessage = "{0} is a required field")]
     public DateTime PublishDate { get; set; }

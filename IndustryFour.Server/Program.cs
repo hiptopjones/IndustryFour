@@ -5,6 +5,7 @@ using IndustryFour.Server.Repositories;
 using IndustryFour.Server.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +60,12 @@ else
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseCors();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+    RequestPath = new PathString("/StaticFiles")
+});
 
 app.MapControllers();
 

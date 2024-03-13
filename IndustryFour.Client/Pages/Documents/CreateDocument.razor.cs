@@ -35,6 +35,9 @@ namespace IndustryFour.Client.Pages.Documents
             _document = new DocumentAddDto();
         }
 
-        public void Dispose() => Interceptor.DisposeEvent();
+        private void AssignContentUrl(string contentUrl) => _document.ContentUrl = contentUrl;
+
+
+		public void Dispose() => Interceptor.DisposeEvent();
     }
 }

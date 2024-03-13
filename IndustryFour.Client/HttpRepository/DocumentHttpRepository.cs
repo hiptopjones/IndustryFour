@@ -28,5 +28,14 @@ namespace IndustryFour.Client.HttpRepository
         {
             await _client.PostAsJsonAsync("documents", document);
         }
-    }
+
+		public async Task<string> UploadDocumentFile(MultipartFormDataContent content)
+		{
+            var postResult = await _client.PostAsync("upload", content);
+            var contentUrlPath = await postResult.Content.ReadAsStringAsync();
+            var contentUrl = Path.Combine("https://localhost:5101", contentUrlPath);
+
+            return contentUrl;
+		}
+	}
 }

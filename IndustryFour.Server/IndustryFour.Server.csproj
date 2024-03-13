@@ -24,6 +24,13 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="StaticFiles\Documents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="StaticFiles\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

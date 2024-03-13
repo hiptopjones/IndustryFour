@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndustryFour.Client", "Indu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndustryFour.Server", "IndustryFour.Server\IndustryFour.Server.csproj", "{6908E6ED-D28B-43C5-8611-61A9F82CCBEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndustryFour.Shared", "IndustryFour.Shared\IndustryFour.Shared.csproj", "{6AD73381-DB56-4AA7-AA11-F8BF8B6B0684}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndustryFour.Shared", "IndustryFour.Shared\IndustryFour.Shared.csproj", "{6AD73381-DB56-4AA7-AA11-F8BF8B6B0684}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
