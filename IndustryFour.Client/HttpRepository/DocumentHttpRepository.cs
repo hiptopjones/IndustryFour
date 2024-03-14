@@ -37,5 +37,8 @@ namespace IndustryFour.Client.HttpRepository
 
             return contentUrl;
 		}
-	}
+
+        public async Task UpdateDocument(DocumentEditDto document) =>
+            await _client.PutAsJsonAsync(Path.Combine("documents", document.Id.ToString()), document);
+    }
 }

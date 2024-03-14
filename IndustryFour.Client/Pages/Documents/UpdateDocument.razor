@@ -1,0 +1,64 @@
+﻿@page "/documents/update/{id:int}"
+@using IndustryFour.Client.Components
+
+@if (_document != null)
+{
+    <h2>Update Document</h2>
+
+    <EditForm Model="_document" OnValidSubmit="Update" class="card card-body bg-light">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3 row">
+            <label for="title" class="col-md-2 col-form-label">Title:</label>
+            <div class="col-md-10">
+                <InputText id="title" class="form-control" @bind-Value="_document.Title" />
+                <ValidationMessage For="@(() => _document.Title)" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="author" class="col-md-2 col-form-label">Author:</label>
+            <div class="col-md-10">
+                <InputText id="author" class="form-control" @bind-Value="_document.Author" />
+                <ValidationMessage For="@(() => _document.Author)" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="description" class="col-md-2 col-form-label">Description:</label>
+            <div class="col-md-10">
+                <InputTextArea id="description" class="form-control" @bind-Value="_document.Description" />
+                <ValidationMessage For="@(() => _document.Description)" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="category" class="col-md-2 col-form-label">Category:</label>
+            <div class="col-md-10">
+                <InputNumber id="category" class="form-control" @bind-Value="_document.CategoryId" />
+                <ValidationMessage For="@(() => _document.CategoryId)" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="sourceUrl" class="col-md-2 col-form-label">Source URL:</label>
+            <div class="col-md-10">
+                <InputText id="sourceUrl" class="form-control" @bind-Value="_document.SourceUrl" />
+                <ValidationMessage For="@(() => _document.SourceUrl)" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="content" class="col-md-2 col-form-label">Content:</label>
+            <div class="col-md-10">
+                <FileUpload OnChange="AssignContentUrl" ContentUrl="@_document.ContentUrl"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-success float-end">Update</button>
+            </div>
+        </div>
+    </EditForm>
+    <br />
+    <div class="row">
+        <div class="col">
+            <a href="/documents" class="btn btn-success">Back</a>
+        </div>
+    </div>
+}

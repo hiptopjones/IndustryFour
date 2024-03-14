@@ -8,5 +8,6 @@ namespace IndustryFour.Client.HttpRepository
         Task<DocumentResultDto> GetDocument(int id);
         Task CreateDocument(DocumentAddDto document);
         Task<string> UploadDocumentFile(MultipartFormDataContent content);
+        Task UpdateDocument(DocumentEditDto document);
 	}
 }

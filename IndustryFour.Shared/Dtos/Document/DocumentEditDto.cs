@@ -20,6 +20,10 @@ namespace IndustryFour.Shared.Dtos.Document
 
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "{0} is a required field")]
+        public string ContentUrl { get; set; }
+
+        [Required(ErrorMessage = "{0} is a required field")]
         public DateTime PublishDate { get; set; }
         public string SourceUrl { get; set; }
     }

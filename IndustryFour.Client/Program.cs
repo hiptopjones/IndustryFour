@@ -26,5 +26,7 @@ builder.Services.AddScoped<HttpInterceptorService>();
 
 builder.Services.AddBlazoredToast();
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 var app = builder.Build();
 await app.RunAsync();

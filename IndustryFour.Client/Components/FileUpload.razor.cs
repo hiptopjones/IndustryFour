@@ -8,7 +8,7 @@ namespace IndustryFour.Client.Components
 	public partial class FileUpload
 	{
 		[Parameter]
-		public string DocumentUrlPath { get; set; }
+		public string ContentUrl { get; set; }
 
 		[Parameter]
 		public EventCallback<string> OnChange { get; set; }
@@ -30,9 +30,9 @@ namespace IndustryFour.Client.Components
 				content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
 				content.Add(new StreamContent(stream, Convert.ToInt32(documentFile.Size)), "document", documentFile.Name);
 
-				DocumentUrlPath = await Repository.UploadDocumentFile(content);
+                ContentUrl = await Repository.UploadDocumentFile(content);
 
-				await OnChange.InvokeAsync(DocumentUrlPath);
+				await OnChange.InvokeAsync(ContentUrl);
 			}
 		}
 
