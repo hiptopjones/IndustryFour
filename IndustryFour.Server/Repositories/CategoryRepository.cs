@@ -1,5 +1,4 @@
 ﻿using IndustryFour.Server.Context;
-using IndustryFour.Server.Interfaces;
 using IndustryFour.Server.Models;
 
 namespace IndustryFour.Server.Repositories

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using IndustryFour.Shared.Dtos.Category;
-using IndustryFour.Server.Interfaces;
 using IndustryFour.Server.Models;
 using Microsoft.AspNetCore.Mvc;
+using IndustryFour.Server.Services;
 
 namespace IndustryFour.Server.Controllers
 {

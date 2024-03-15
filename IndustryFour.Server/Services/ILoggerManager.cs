@@ -1,4 +1,4 @@
-﻿namespace IndustryFour.Server.Interfaces;
+﻿namespace IndustryFour.Server.Services;
 
 public interface ILoggerManager
 {

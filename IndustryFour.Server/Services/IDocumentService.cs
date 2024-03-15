@@ -1,6 +1,6 @@
 ﻿using IndustryFour.Server.Models;
 
-namespace IndustryFour.Server.Interfaces;
+namespace IndustryFour.Server.Services;
 
 public interface IDocumentService : IDisposable
 {

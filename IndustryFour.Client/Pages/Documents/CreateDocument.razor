@@ -35,6 +35,13 @@
         </div>
     </div>
     <div class="mb-3 row">
+        <label for="publishDate" class="col-md-2 col-form-label">Publish Date:</label>
+        <div class="col-md-10">
+            <InputDate id="publishDate" class="form-control" @bind-Value="_document.PublishDate" />
+            <ValidationMessage For="@(() => _document.PublishDate)" />
+        </div>
+    </div>
+    <div class="mb-3 row">
         <label for="sourceUrl" class="col-md-2 col-form-label">Source URL:</label>
         <div class="col-md-10">
             <InputText id="sourceUrl" class="form-control" @bind-Value="_document.SourceUrl" />

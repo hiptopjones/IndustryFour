@@ -1,15 +1,18 @@
-﻿using IndustryFour.Server.Interfaces;
-using IndustryFour.Server.Models;
+﻿using IndustryFour.Server.Models;
+using IndustryFour.Server.Repositories;
+using IndustryFour.Server.Retrieval;
 
 namespace IndustryFour.Server.Services;
 
 public class DocumentService : IDocumentService
 {
     private readonly IDocumentRepository _documentRepository;
+    private readonly IDocumentIndex _documentIndex;
 
-    public DocumentService(IDocumentRepository documentRepository)
+    public DocumentService(IDocumentRepository documentRepository, IDocumentIndex documentIndex)
     {
         _documentRepository = documentRepository;
+        _documentIndex = documentIndex;
     }
 
     public async Task<IEnumerable<Document>> GetAll()
@@ -30,6 +33,11 @@ public class DocumentService : IDocumentService
         }
 
         await _documentRepository.Add(document);
+
+        // Retrieve the document so we get the category filled in
+        document = await _documentRepository.GetById(document.Id);
+        await _documentIndex.Add(document);
+
         return document;
     }
 
@@ -41,12 +49,16 @@ public class DocumentService : IDocumentService
         }
 
         await _documentRepository.Update(document);
+        //await _documentIndex.Update(document);
+
         return document;
     }
 
     public async Task<bool> Remove(Document document)
     {
         await _documentRepository.Remove(document);
+        //await _documentIndex.Remove(document);
+
         return true;
     }
 

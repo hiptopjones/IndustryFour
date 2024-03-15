@@ -45,7 +45,19 @@
     {
         try
         {
-            Answer = await HttpClient.GetStringAsync($"embeddings/answer?question={Question}");
+            KeyValuePair<string, string> pair = new KeyValuePair<string, string>("question", Question);
+
+            var response = await HttpClient.GetAsync($"chat/question?question={Question}");
+            if (response.IsSuccessStatusCode)
+            {
+                Answer = await response.Content.ReadAsStringAsync();    
+            }
+            else
+            {
+
+                Answer = null;
+                Error = await response.Content.ReadAsStringAsync();
+            }
         }
         catch (Exception ex)
         {

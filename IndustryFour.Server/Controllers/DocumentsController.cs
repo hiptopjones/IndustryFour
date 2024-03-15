@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IndustryFour.Shared.Dtos.Document;
-using IndustryFour.Server.Interfaces;
 using IndustryFour.Server.Models;
 using IndustryFour.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -67,14 +66,6 @@ public class DocumentsController : Controller
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(DocumentAddDto documentDto)
     {
-        // TODO: Evaluate these automatic model validations
-        // https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-8.0#automatic-http-400-responses
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError("Invalid model state: " + ModelState.ToString());
-            return BadRequest();
-        }
-
         var document = _mapper.Map<Document>(documentDto);
         var documentResult = await _documentService.Add(document);
         if (documentResult == null)
@@ -92,11 +83,6 @@ public class DocumentsController : Controller
     public async Task<IActionResult> Update(int id, DocumentEditDto documentDto)
     {
         if (id != documentDto.Id)
-        {
-            return BadRequest();
-        }
-
-        if (!ModelState.IsValid)
         {
             return BadRequest();
         }

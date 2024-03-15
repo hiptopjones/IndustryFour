@@ -1,7 +1,7 @@
 ﻿using IndustryFour.Server.Models;
 using System.Reflection.Metadata;
 
-namespace IndustryFour.Server.Interfaces;
+namespace IndustryFour.Server.Services;
 
 public interface ICategoryService : IDisposable
 {

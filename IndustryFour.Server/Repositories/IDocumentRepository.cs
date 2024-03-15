@@ -1,6 +1,6 @@
 ﻿using IndustryFour.Server.Models;
 
-namespace IndustryFour.Server.Interfaces
+namespace IndustryFour.Server.Repositories
 {
     public interface IDocumentRepository : IRepository<Document>, IDisposable
     {

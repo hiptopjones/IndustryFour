@@ -1,18 +1,23 @@
 using IndustryFour.Server;
 using IndustryFour.Server.Context;
-using IndustryFour.Server.Interfaces;
 using IndustryFour.Server.Repositories;
+using IndustryFour.Server.Retrieval;
 using IndustryFour.Server.Services;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using NLog;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 LogManager.Setup().LoadConfigurationFromFile(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Prevent problems with EF Core doing automatic fix-up of navigation properties leading to cycles
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -38,8 +43,19 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<IDocumentIndex, DocumentIndex>();
+builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp => 
+    new TextSplitter(
+        separator: ".",
+        chunkSize: 1000,
+        chunkOverlap: 300));
+builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
+builder.Services.AddScoped<IVectorStore, ChromaDbVectorStore>();
+builder.Services.AddScoped<IChatProvider, OllamaChatProvider>();
 
 builder.Services.AddSqlite<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 

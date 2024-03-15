@@ -1,7 +1,7 @@
 ﻿using IndustryFour.Server.Models;
 using System.Linq.Expressions;
 
-namespace IndustryFour.Server.Interfaces;
+namespace IndustryFour.Server.Repositories;
 
 public interface IRepository<T> where T : Entity
 {
