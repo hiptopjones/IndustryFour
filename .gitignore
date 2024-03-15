@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /IndustryFour.Server/internal_logs/internallog.txt
 /IndustryFour.Server/documents.db
+/IndustryFour.Server/documents.db-shm
+/IndustryFour.Server/documents.db-wal

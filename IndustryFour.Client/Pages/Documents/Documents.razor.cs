@@ -27,6 +27,12 @@ namespace IndustryFour.Client.Pages.Documents
             DocumentResults = await DocumentRepository.GetDocuments();
         }
 
+        private async Task DeleteProduct(int id)
+        {
+            await DocumentRepository.DeleteDocument(id);
+            await GetDocuments();
+        }
+
         public void Dispose() => Interceptor.DisposeEvent();
     }
 }

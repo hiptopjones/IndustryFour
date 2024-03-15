@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace IndustryFour.Client.HttpRepository
 {
-	public class DocumentHttpRepository : IDocumentHttpRepository
+    public class DocumentHttpRepository : IDocumentHttpRepository
     {
         private readonly HttpClient _client;
         
@@ -40,5 +40,8 @@ namespace IndustryFour.Client.HttpRepository
 
         public async Task UpdateDocument(DocumentEditDto document) =>
             await _client.PutAsJsonAsync(Path.Combine("documents", document.Id.ToString()), document);
+
+        public async Task DeleteDocument(int id) =>
+            await _client.DeleteAsync(Path.Combine("documents", id.ToString()));
     }
 }
