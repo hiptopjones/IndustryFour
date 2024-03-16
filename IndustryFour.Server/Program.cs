@@ -51,7 +51,7 @@ builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp =>
         chunkOverlap: 300));
 builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
 builder.Services.AddScoped<IVectorStore, ChromaDbVectorStore>();
-builder.Services.AddScoped<IChatProvider, OllamaChatProvider>();
+builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
 
 builder.Services.AddSqlite<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
 
