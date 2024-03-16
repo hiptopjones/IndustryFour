@@ -1,5 +1,7 @@
 using IndustryFour.Server.Retrieval;
+using IndustryFour.Shared.Dtos.Chat;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace GenTools.Server.Controllers
 {
@@ -19,10 +21,20 @@ namespace GenTools.Server.Controllers
             _chat = chat;
         } 
 
-        [HttpGet("question")]
-        public async Task<IActionResult> AskQuestion(string question)
+        [HttpPost]
+        public async Task<IActionResult> AskQuestion(ChatRequestDto request)
         {
-            var chunks = await _index.SimilaritySearch(question, 3);
+            ChatResponseDto response = new ChatResponseDto
+            {
+                Request = request
+            };
+
+            Stopwatch stopwatch;
+
+            stopwatch = Stopwatch.StartNew();
+            var chunks = await _index.SimilaritySearch(request.Question, request.MaxSearchResults != 0 ? request.MaxSearchResults : 1);
+            response.Chunks = new List<string>(chunks);
+            response.SimilaritySearchDuration = stopwatch.Elapsed;
 
             var prompt = $"""
                 Use the following pieces of context to answer the question at the end.
@@ -31,14 +43,17 @@ namespace GenTools.Server.Controllers
 
                 {string.Join("\n\n", chunks)}
 
-                Question: {question}
+                Question: {request.Question}
                 Helpful Answer:
                 """;
-            Console.WriteLine($"Prompt: {prompt}");
+            response.Prompt = prompt;
 
+            stopwatch = Stopwatch.StartNew();
             var answer = await _chat.Chat(prompt);
+            response.Answer = answer;
+            response.ChatProviderDuration = stopwatch.Elapsed;
 
-            return Ok(answer);
+            return Ok(response);
         }
     }
 }

@@ -1,67 +1,73 @@
 ﻿@page "/chat"
-@inject HttpClient HttpClient
 
 <PageTitle>Industry 4.0 - Chat</PageTitle>
 
 <h1>Chat</h1>
 <form id="input-form">
     <div class="mb-3">
-        <label for="input-prompt" class="form-label">Enter your prompt:</label>
+        <label for="input-prompt" class="form-label">Enter your question:</label>
         <input type="text" class="form-control mb-4 m-auto" id="input-prompt" @bind="Question" />
     </div>
-    <button type="button" class="btn btn-success" disabled="@IsTaskRunning" @onclick="Click">Submit</button>
+    <button type="button" class="btn btn-success" disabled="@IsTaskRunning" @onclick="Click">Ask Question!</button>
 </form>
 <div class="mt-4" id="input-result">
-    @if (Answer is not null || Error is not null)
+    @if (Response is not null)
     {
-        <p style="white-space: pre-line">@Answer</p>
-        <pre>@Error</pre>
+        <div class="card card-body mb-3">
+            <h5 class="card-title">Question</h5>
+            <p class="card-text" style="white-space: pre-line">@Response.Request.Question</p>
+        </div>
+
+        <div class="collapse show mb-3" id="relevantChunks">
+            <div class="card card-body bg-secondary-subtle">
+                <h5 class="card-title">Relevant Chunks</h5>
+                <div class="card-text">
+                    @foreach (var chunk in Response.Chunks)
+                    {
+                        <p style="white-space: pre-line">@chunk</p>
+                        <hr />
+                    }
+
+                    <p><em>Took @(Response.SimilaritySearchDuration.TotalSeconds.ToString("N1"))s</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse show mb-3" id="finalPrompt">
+            <div class="card card-body bg-secondary-subtle">
+                <h5 class="card-title">Final Prompt</h5>
+                <div class="card-text">
+                    <p style="white-space: pre-line">@Response.Prompt</p>
+                    <p><em>Took @(Response.ChatProviderDuration.TotalSeconds.ToString("N1"))s</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-body mb-3">
+            <h5 class="card-title">Answer</h5>
+            <p class="card-text" style="white-space: pre-line">@Response.Answer</p>
+        </div>
+
+        <p class="mb-3">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#relevantChunks" aria-expanded="false" aria-controls="relevantChunks">
+                Relevant Chunks
+            </button>
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#finalPrompt" aria-expanded="false" aria-controls="finalPrompt">
+                Final Prompt
+            </button>
+        </p>
+    }
+    else if (Error is not null)
+    {
+        <div class="card card-body">
+            <pre>@Error</pre>
+        </div>
+    }
+    else
+    {
+        @if (IsTaskRunning)
+        {
+            <p>Asking question...</p>
+        }
     }
 </div>
-
-@code
-{
-    private string Key { get; set; }
-    private string Question { get; set; } = "What is the automation stack?";
-    private string Error { get; set; }
-    private string Answer { get; set; }
-    private bool IsTaskRunning { get; set; }
-
-    private async Task Click()
-    {
-        IsTaskRunning = true;
-        Answer = "Processing...";
-        Error = null;
-
-        // Forces a render
-        await Task.Delay(1);
-
-        await OnPromptSubmitted();
-
-        IsTaskRunning = false;
-    }
-
-    private async Task OnPromptSubmitted()
-    {
-        try
-        {
-            KeyValuePair<string, string> pair = new KeyValuePair<string, string>("question", Question);
-
-            var response = await HttpClient.GetAsync($"chat/question?question={Question}");
-            if (response.IsSuccessStatusCode)
-            {
-                Answer = await response.Content.ReadAsStringAsync();    
-            }
-            else
-            {
-
-                Answer = null;
-                Error = await response.Content.ReadAsStringAsync();
-            }
-        }
-        catch (Exception ex)
-        {
-            Error = ex.ToString();
-        }
-    }
-}

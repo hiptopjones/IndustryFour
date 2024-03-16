@@ -1,6 +1,4 @@
 ﻿@page "/about"
-@inject HttpClient HttpClient
-@inject IConfiguration Configuration
 
 <PageTitle>Industry 4.0 - About</PageTitle>
 
@@ -10,13 +8,3 @@
 <p>
     <em>"@Quote"</em>
 </p>
-
-@code
-{
-    private string Quote { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Quote = await HttpClient.GetStringAsync("quotes/random");
-    }
-}

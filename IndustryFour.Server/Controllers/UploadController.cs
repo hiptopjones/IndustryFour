@@ -11,28 +11,24 @@ namespace IndustryFour.Server.Controllers
 		public IActionResult Upload()
 		{
 			var file = Request.Form.Files[0];
+            if (file.Length == 0)
+            {
+                return BadRequest();
+            }
 
-			var targetFolder = Path.Combine("StaticFiles", "Documents");
-
+            var targetFolder = Path.Combine("StaticFiles", "Documents");
 			var targetDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), targetFolder);
 
-			if (file.Length > 0)
-			{
-				var targetFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-				var targetFilePath = Path.Combine(targetDirectoryPath, targetFileName);
-				var urlPath = Path.Combine(targetFolder, targetFileName);
+			var targetFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+			var targetFilePath = Path.Combine(targetDirectoryPath, targetFileName);
+			var urlPath = Path.Combine(targetFolder, targetFileName);
 
-				using (var stream = new FileStream(targetFilePath, FileMode.Create))
-				{
-					file.CopyTo(stream);
-				}
-
-				return Ok(urlPath);
-			}
-			else
+			using (var stream = new FileStream(targetFilePath, FileMode.Create))
 			{
-				return BadRequest();
+				file.CopyTo(stream);
 			}
+
+			return Ok(urlPath);
 		}
 	}
 }
