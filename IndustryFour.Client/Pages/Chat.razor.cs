@@ -13,12 +13,12 @@ namespace IndustryFour.Client.Pages
         [Inject]
         protected IJSRuntime _JsRuntime { get; set; }
 
-        private string Question { get; set; } = "What is the automation stack?";
+        private ChatRequestDto Request { get; set; } = new ChatRequestDto();
         private ChatResponseDto Response { get; set; }
         private string Error { get; set; }
         private bool IsTaskRunning { get; set; }
 
-        private async Task Click()
+        private async Task Submit()
         {
             IsTaskRunning = true;
             Response = null;
@@ -29,7 +29,8 @@ namespace IndustryFour.Client.Pages
 
             await OnPromptSubmitted();
 
-            Question = null;
+            Request = new ChatRequestDto();
+
             IsTaskRunning = false;
         }
 
@@ -37,13 +38,7 @@ namespace IndustryFour.Client.Pages
         {
             try
             {
-                ChatRequestDto request = new ChatRequestDto
-                {
-                    Question = Question,
-                    MaxSearchResults = 1
-                };
-
-                var response = await HttpClient.PostAsJsonAsync("chat", request);
+                var response = await HttpClient.PostAsJsonAsync("chat", Request);
                 if (response.IsSuccessStatusCode)
                 {
                     Response = await response.Content.ReadFromJsonAsync<ChatResponseDto>();
