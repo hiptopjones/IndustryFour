@@ -24,7 +24,6 @@ public class DocumentsController : Controller
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var documents = await _documentService.GetAll();
@@ -33,8 +32,6 @@ public class DocumentsController : Controller
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id)
     {
         var document = await _documentService.GetById(id);
@@ -48,8 +45,6 @@ public class DocumentsController : Controller
 
     [HttpGet]
     [Route("get-documents-by-category/{categoryId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetDocumentsByCategory(int categoryId)
     {
         var documents = await _documentService.GetDocumentsByCategory(categoryId);
@@ -62,8 +57,6 @@ public class DocumentsController : Controller
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(DocumentAddDto documentDto)
     {
         var document = _mapper.Map<Document>(documentDto);
@@ -78,8 +71,6 @@ public class DocumentsController : Controller
     }
 
     [HttpPut("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(int id, DocumentEditDto documentDto)
     {
         if (id != documentDto.Id)
@@ -93,8 +84,6 @@ public class DocumentsController : Controller
     }
 
     [HttpDelete("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Remove(int id)
     {
         var document = await _documentService.GetById(id);
@@ -110,8 +99,6 @@ public class DocumentsController : Controller
 
     [HttpGet]
     [Route("search/{documentName}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<Document>>> Search(string documentName)
     {
         var documents = _mapper.Map<List<Document>>(await _documentService.Search(documentName));
@@ -125,8 +112,6 @@ public class DocumentsController : Controller
 
     [HttpGet]
     [Route("search-document-with-category/{searchedValue}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<Document>>> SearchDocumentWithCategory(string searchedValue)
     {
         var documents = _mapper.Map<List<Document>>(await _documentService.SearchDocumentsWithCategory(searchedValue));

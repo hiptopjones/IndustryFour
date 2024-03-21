@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IndustryFour.Server.Migrations
 {
     [DbContext(typeof(DocumentStoreDbContext))]
-    [Migration("20240313044614_DatabaseCreation")]
+    [Migration("20240321062115_DatabaseCreation")]
     partial class DatabaseCreation
     {
         /// <inheritdoc />
@@ -38,7 +38,7 @@ namespace IndustryFour.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Podcast Transcript"
+                            Name = "YouTube Video"
                         },
                         new
                         {

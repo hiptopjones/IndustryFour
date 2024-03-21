@@ -26,12 +26,17 @@
         </div>
         <div class="row">
             <div class="col">
+                <strong>Published:</strong> @(Document.PublishDate.ToShortDateString())
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <strong>Source:</strong> <a href="@Document.SourceUrl" target="_blank">@Document.SourceUrl</a>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <strong>Source:</strong> <a href="@Document.ContentUrl" target="_blank">@Document.ContentUrl</a>
+                <strong>Content:</strong> <a href="@Document.ContentUrl" target="_blank">@Document.ContentUrl</a>
             </div>
         </div>
     </div>

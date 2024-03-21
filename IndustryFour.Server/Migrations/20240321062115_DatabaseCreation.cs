@@ -55,7 +55,7 @@ namespace IndustryFour.Server.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Podcast Transcript" },
+                    { 1, "YouTube Video" },
                     { 2, "LinkedIn Post" }
                 });
 

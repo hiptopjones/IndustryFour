@@ -19,7 +19,7 @@
 
         public async Task<IEnumerable<string>> Split(string text)
         {
-            string[] splits = text.Split(Separator);
+            string[] splits = text.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
             return await MergeSplits(splits.ToList());
         }
 

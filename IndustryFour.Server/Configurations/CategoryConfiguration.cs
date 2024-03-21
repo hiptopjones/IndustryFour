@@ -24,7 +24,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 			new Category
 			{
 				Id = 1,
-				Name = "Podcast Transcript"
+				Name = "YouTube Video"
 			},
 			new Category
 			{

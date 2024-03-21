@@ -35,7 +35,7 @@ namespace IndustryFour.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Podcast Transcript"
+                            Name = "YouTube Video"
                         },
                         new
                         {
