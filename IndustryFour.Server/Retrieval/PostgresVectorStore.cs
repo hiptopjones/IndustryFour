@@ -12,7 +12,7 @@ public class PostgresVectorStore : IVectorStore
     private readonly DistanceStrategy _distanceStrategy;
     private readonly string _collectionName;
 
-    private readonly PostgresDbClient _postgresDbClient;
+    private readonly PostgresDbClient _dbClient;
 
     public PostgresVectorStore(
         string connectionString,
@@ -21,7 +21,7 @@ public class PostgresVectorStore : IVectorStore
         string collectionName = DefaultCollectionName,
         DistanceStrategy distanceStrategy = DistanceStrategy.Cosine)
     {
-        _postgresDbClient = new PostgresDbClient(connectionString, schema, vectorSize);
+        _dbClient = new PostgresDbClient(connectionString, schema, vectorSize);
 
         _collectionName = collectionName;
         _distanceStrategy = distanceStrategy;
@@ -31,7 +31,7 @@ public class PostgresVectorStore : IVectorStore
     {
         await EnsureVectorsTableExists();
 
-        var result = await _postgresDbClient.GetWithDistanceAsync(
+        var result = await _dbClient.GetWithDistanceAsync(
             _collectionName,
             embedding,
             _distanceStrategy,
@@ -47,7 +47,7 @@ public class PostgresVectorStore : IVectorStore
         IEnumerable<string> ids,
         IEnumerable<float[]> embeddings,
         IEnumerable<Dictionary<string, object>> metadatas,
-        IEnumerable<string> documents)
+        IEnumerable<string> chunks)
     {
         await EnsureVectorsTableExists();
 
@@ -55,14 +55,14 @@ public class PostgresVectorStore : IVectorStore
         var idsArray = ids.ToArray();
         var embeddingsArray = embeddings.ToArray();
         var metadatasArray = metadatas.ToArray();
-        var documentsArray = documents.ToArray();
+        var chunksArray = chunks.ToArray();
 
         for (var i = 0; i < idsArray.Length; i++)
         {
-            await _postgresDbClient.UpsertAsync(
+            await _dbClient.UpsertAsync(
                 _collectionName,
                 id: idsArray[i],
-                documentsArray[i],
+                chunksArray[i],
                 metadatasArray[i],
                 embeddingsArray[i],
                 DateTime.UtcNow
@@ -72,9 +72,9 @@ public class PostgresVectorStore : IVectorStore
 
     private async Task EnsureVectorsTableExists()
     {
-        if (!await _postgresDbClient.IsTableExistsAsync(_collectionName))
+        if (!await _dbClient.IsTableExistsAsync(_collectionName))
         {
-            await _postgresDbClient.CreateEmbeddingTableAsync(_collectionName);
+            await _dbClient.CreateEmbeddingTableAsync(_collectionName);
         }
     }
 }
