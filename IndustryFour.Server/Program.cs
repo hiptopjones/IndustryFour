@@ -50,7 +50,12 @@ builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp =>
         chunkSize: 1000,
         chunkOverlap: 300));
 builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
-builder.Services.AddScoped<IVectorStore, ChromaDbVectorStore>();
+builder.Services.AddScoped<IVectorStore, PostgresVectorStore>(sp =>
+{
+    return new PostgresVectorStore(
+        "Host=localhost;Port=5432;Database=vector_db;User ID=postgres;Password=mysecretpassword;",
+        768);
+});
 builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
 
 builder.Services.AddSqlite<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
