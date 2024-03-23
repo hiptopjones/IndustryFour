@@ -1,4 +1,10 @@
-﻿@if (Documents.Any())
+﻿@if (Documents == null)
+{
+	<span>
+		Loading documents...
+	</span>
+}
+else if (Documents.Any())
 {
 	<table class="table">
 		<thead>
@@ -42,6 +48,6 @@
 else
 {
 	<span>
-		Loading documents...
+		No documents
 	</span>
 }

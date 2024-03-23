@@ -1,0 +1,138 @@
+[
+    {
+        "Title": "The 5 Layer Model of Automation... The \"Automation Stack\"",
+        "Description": "In this video Walker Reynolds explains the 5 layer model of enterprise automation otherwise known as the automation stack.",
+        "FileName": "the-5-layer-model-of-automation-the-automation-stack.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=3u2cRRMlG7Q",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-03"
+    },
+    {
+        "Title": "What is IIoT?",
+        "Description": "Walker Reynolds answers the age old question: What is IIoT? He also introduces the concept of the Unified Namespace and how crucial it is for an IIoT infrastructure.",
+        "FileName": "what-is-iiot.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=0aWmrvHPmBs",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-05"
+    },
+    {
+        "Title": "What is the Digital Factory?",
+        "Description": "In this video Walker Reynolds explains what makes a digital factory and why it matters to manufacturers that want to remain competitive.",
+        "FileName": "what-is-the-digital-factory.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=UrUK3bd-Ooc",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-10"
+    },
+    {
+        "Title": "What is an IIoT Protocol?",
+        "Description": "Walker Reynolds explains what makes an IIoT Protocol.",
+        "FileName": "what-is-an-iiot-protocol.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=PCrtON30mT0",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-12"
+    },
+    {
+        "Title": "What is MQTT? Why does it matter?",
+        "Description": "In this video Walker Reynolds explains why MQTT is one of the best protocols for the Industrial Internet of Things: IIoT.",
+        "FileName": "what-is-mqtt-why-does-it-matter.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=SYrPokcfClA",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-17"
+    },
+    {
+        "Title": "The Digital Transformation of our Personal Lives",
+        "Description": "In this video Walker Reynolds, President and founder of Intellic Integration, explains how the digital transformation of our personal lives effected the things we do on a daily basis. This understanding lays the foundation for understanding what digital transformation and digital factories can do for manufacturing.",
+        "FileName": "the-digital-transformation-of-our-personal-lives.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=Un2P3I25V5g",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-24"
+    },
+    {
+        "Title": "Industry 4.0 - Digital transformation - IIoT - EXPLAINED!",
+        "Description": "In this video Walker Reynolds explains the before and after of digital transformation of an organization using Industrial Internet of Things architecture.",
+        "FileName": "digital-transformation-iiot-explained.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=4yQ7f0c0rOo",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2018-12-26"
+    },
+    {
+        "Title": "What is the UNIFIED NAMESPACE?",
+        "Description": "In this new video series, Walker Reynolds explains what is unified Namespace looks like and why it matters in the world of automation.",
+        "FileName": "what-is-the-unified-namespace.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=PB_9HIgSCWc",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2019-05-31"
+    },
+    {
+        "Title": "Typical IIoT Infrastructure REVEALED",
+        "Description": "Walker Reynolds shares what an ACTUAL IIoT Infrastructure looks like.",
+        "FileName": "typical-iiot-infrastructure-revealed.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=oxNWur6PZ1g",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2020-01-22"
+    },
+    {
+        "Title": "What is the Unified NameSpace?",
+        "Description": "",
+        "FileName": "what-is-the-unified-namespace-2.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=5cMqL9oUk_Y",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2022-10-18"
+    },
+    {
+        "Title": "MES Systems: The Secret To Manufacturing Success",
+        "Description": "In this video, Walker Reynolds is going to explain why you need to build your MES system.",
+        "FileName": "mes-systems-the-secret-to-manufacturing-success.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=irbXBbwC9ic",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-03-01"
+    },
+    {
+        "Title": "Why Customers Build their MES — Preserving their Processes",
+        "Description": "Walker Reynolds custom MES Use-case walk-through. Don't fit your organization into someone else's solutions, build your own solution so you can tailor that solution to what makes your organization and operations unique.",
+        "FileName": "why-customers-build-their-mes-preserving-their-processes.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=Evs-qyCYdN0",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-03-15"
+    },
+    {
+        "Title": "MES to ERP Communications Explained!",
+        "Description": "Walker Reynolds covers MES to ERP Communications Industry 3.0 vs Industry 4.0.",
+        "FileName": "mes-to-erp-communications-explained.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=koEft4YWI-A",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-03-17"
+    },
+    {
+        "Title": "Digital Thread is still a Debate in 5th IR?",
+        "Description": "Explore the Fifth Industrial Revolution as we dive into AI's role in manufacturing, the limitations of digital thread, and the benefits of unified namespace integration. Learn how these advancements are shaping the future of Industry 4.0 and driving a global renaissance in manufacturing.",
+        "FileName": "digital-thread-is-still-a-debate-in-5th-ir.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=AC-vms4eZuU",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-04-12"
+    },
+    {
+        "Title": "OEE and Industry 4.0",
+        "Description": "In this Whiteboard video Walker explains the difference in the way Industry 3.0 and Industry 4.0 manufacturers use OEE and why you should be calculating it 3 ways. A metric to make the customer happy or a valuable business metric?  How not to get it wrong.",
+        "FileName": "oee-and-industry-4-0.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=MhM3NhBJMg8",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-05-10"
+    },
+    {
+        "Title": "How Adding Context to Your Data Can Transform Your Business",
+        "Description": "Walker Reynolds from 4.0 Solutions goes over what Additive Data Context is, and what the step to data ops are.",
+        "FileName": "how-adding-context-to-your-data-can-transform-your-business.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=tnGdcjzRUS4",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-06-21"
+    },
+    {
+        "Title": "Unified Namespace and Historians",
+        "Description": "4.0 Solutions and Walker Reynolds answer how does the Unified Namespace work with historians?",
+        "FileName": "unified-namespace-and-historians.mp3",
+        "SourceUrl": "https://www.youtube.com/watch?v=AjIgJ6sSrnU",
+        "Channel": "4.0 Solutions",
+        "PublishDate": "2023-06-07"
+    }
+]

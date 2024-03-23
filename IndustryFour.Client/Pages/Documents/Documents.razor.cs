@@ -7,7 +7,7 @@ namespace IndustryFour.Client.Pages.Documents
 {
     public partial class Documents : IDisposable
     {
-        public List<DocumentResultDto> DocumentResults { get; set; } = new List<DocumentResultDto>();
+        public List<DocumentResultDto> DocumentResults { get; set; }
 
         [Inject]
         public IDocumentHttpRepository DocumentRepository { get; set; }
