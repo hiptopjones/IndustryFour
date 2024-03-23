@@ -12,7 +12,7 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<DocumentStor
             .AddJsonFile("appsettings.json").Build();
 
         var builder = new DbContextOptionsBuilder<DocumentStoreDbContext>()
-            .UseSqlite(configuration.GetConnectionString("sqlConnection"));
+            .UseNpgsql(configuration.GetConnectionString("sqlConnection"));
 
         return new DocumentStoreDbContext(builder.Options);
     }

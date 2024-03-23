@@ -4,6 +4,7 @@ using IndustryFour.Server.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,21 +16,29 @@ namespace IndustryFour.Server.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("IndustryFour.Server.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("categories", (string)null);
 
                     b.HasData(
                         new
@@ -48,38 +57,49 @@ namespace IndustryFour.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("author");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasColumnName("category_id");
 
                     b.Property<string>("ContentUrl")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("content_url");
 
                     b.Property<string>("Description")
-                        .HasColumnType("varchar(350)");
+                        .IsRequired()
+                        .HasColumnType("varchar(350)")
+                        .HasColumnName("description");
 
                     b.Property<DateTime>("PublishDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
 
                     b.Property<string>("SourceUrl")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("source_url");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("title");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Documents", (string)null);
+                    b.ToTable("documents", (string)null);
                 });
 
             modelBuilder.Entity("IndustryFour.Server.Models.Document", b =>

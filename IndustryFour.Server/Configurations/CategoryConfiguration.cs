@@ -8,16 +8,21 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.HasKey(b => b.Id);
+		builder.HasKey(b => b.Id);
 
-        builder.Property(b => b.Name)
-            .IsRequired();
+		builder.Property(b => b.Id)
+			.IsRequired()
+			.HasColumnName("id");
 
-        builder.HasMany(c => c.Documents)
-            .WithOne(b => b.Category)
-            .HasForeignKey(b => b.CategoryId);
+		builder.Property(b => b.Name)
+            .IsRequired()
+			.HasColumnName("name");
 
-        builder.ToTable("Categories");
+		builder.HasMany(c => c.Documents)
+			.WithOne(b => b.Category)
+			.HasForeignKey(b => b.CategoryId);
+
+        builder.ToTable("categories");
 
 		builder.HasData
 		(

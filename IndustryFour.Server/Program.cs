@@ -53,12 +53,12 @@ builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
 builder.Services.AddScoped<IVectorStore, PostgresVectorStore>(sp =>
 {
     return new PostgresVectorStore(
-        "Host=localhost;Port=5432;Database=vector_db;User ID=postgres;Password=mysecretpassword;",
+		builder.Configuration.GetConnectionString("sqlConnection"),
         768);
 });
 builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
 
-builder.Services.AddSqlite<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
+builder.Services.AddNpgsql<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
 
 builder.Services.AddHttpClient();
 
