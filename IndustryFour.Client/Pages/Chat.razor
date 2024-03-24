@@ -7,9 +7,21 @@
 <EditForm Model="Request" OnSubmit="Submit">
     <div class="mb-3">
         <label for="promptText" class="form-label">Question:</label>
-        <InputText type="text" class="form-control" id="promptText" placeholder="What is the automation stack?" @bind-Value="Request.Question" />
+        <InputText type="text" class="form-control" id="promptText" placeholder="Enter your question..." @bind-Value="Request.Question" />
     </div>
-    <button type="submit" class="btn btn-success" disabled="@IsTaskRunning">Ask Question!</button>
+    <div class="form-check form-switch mb-3">
+        <InputCheckbox class="form-check-input" id="useConciseResponseCheck" @bind-Value="Request.UseConciseResponse" />
+        <label class="form-check-label" for="useConciseResponseCheck">
+            Provide Concise Responses
+        </label>
+    </div>
+    <div class="form-check form-switch mb-3">
+        <InputCheckbox class="form-check-input" id="useContextOnlyCheck" @bind-Value="Request.UseContextOnly" />
+        <label class="form-check-label" for="useContextOnlyCheck">
+            Use Provided Context Only
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary" disabled="@IsTaskRunning">Ask Question!</button>
 </EditForm>
 
 <div class="mt-4" id="input-result">
@@ -36,7 +48,13 @@
                         <hr />
                     }
 
-                    <p><em>Took @(Response.SimilaritySearchDuration.TotalSeconds.ToString("N1"))s</em></p>
+                    <p>
+                        <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#relevantChunks" aria-expanded="false" aria-controls="relevantChunks">
+                            Hide
+                        </button>
+
+                        <em>Semantic search took @(Response.SimilaritySearchDuration.TotalSeconds.ToString("N1"))s</em>
+                    </p>
                 </div>
             </div>
         </div>
@@ -46,7 +64,15 @@
                 <h5 class="card-title">Final Prompt</h5>
                 <div class="card-text">
                     <p style="white-space: pre-line">@Response.Prompt</p>
-                    <p><em>Took @(Response.ChatProviderDuration.TotalSeconds.ToString("N1"))s</em></p>
+                    <hr />
+
+                    <p>
+                        <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#finalPrompt" aria-expanded="false" aria-controls="finalPrompt">
+                            Hide
+                        </button>
+
+                        <em>Final prompt took @(Response.ChatProviderDuration.TotalSeconds.ToString("N1"))s</em>
+                    </p>
                 </div>
             </div>
         </div>

@@ -34,8 +34,8 @@ namespace IndustryFour.Client.Pages
 
             await OnPromptSubmitted();
 
-            // Clear the form
-            Request = new ChatRequestDto();
+            // Clear the question text
+            Request.Question = string.Empty;
 
             IsTaskRunning = false;
         }
