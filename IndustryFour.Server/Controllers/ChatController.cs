@@ -1,4 +1,5 @@
 using IndustryFour.Server.Retrieval;
+using IndustryFour.Server.Services;
 using IndustryFour.Shared.Dtos.Chat;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -11,10 +12,10 @@ namespace GenTools.Server.Controllers
     {
         private readonly ILogger<ChatController> _logger;
 
-        private readonly IDocumentIndex _index;
+        private readonly IDocumentIndexService _index;
         private readonly IChatProvider _chat;
 
-        public ChatController(ILogger<ChatController> logger, IDocumentIndex index, IChatProvider chat)
+        public ChatController(ILogger<ChatController> logger, IDocumentIndexService index, IChatProvider chat)
         {
             _logger = logger;
             _index = index;

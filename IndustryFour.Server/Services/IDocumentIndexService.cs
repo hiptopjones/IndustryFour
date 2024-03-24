@@ -1,8 +1,8 @@
 ﻿using IndustryFour.Server.Models;
 
-namespace IndustryFour.Server.Retrieval
+namespace IndustryFour.Server.Services
 {
-    public interface IDocumentIndex
+    public interface IDocumentIndexService
     {
         Task Add(Document document);
         Task Update(Document document);

@@ -60,6 +60,7 @@ public class DocumentsController : Controller
     public async Task<IActionResult> Add(DocumentAddDto documentDto)
     {
         var document = _mapper.Map<Document>(documentDto);
+         
         var documentResult = await _documentService.Add(document);
         if (documentResult == null)
         {

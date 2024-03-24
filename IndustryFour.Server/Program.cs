@@ -41,21 +41,17 @@ builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
 builder.Services.AddScoped<DocumentStoreDbContext>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+builder.Services.AddScoped<IChunkRepository, ChunkRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
-builder.Services.AddScoped<IDocumentIndex, DocumentIndex>();
+builder.Services.AddScoped<IChunkService, ChunkService>();
+builder.Services.AddScoped<IDocumentIndexService, DocumentIndexService>();
 builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp => 
     new TextSplitter(
         separator: ".",
         chunkSize: 1000,
         chunkOverlap: 300));
 builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
-builder.Services.AddScoped<IVectorStore, PostgresVectorStore>(sp =>
-{
-    return new PostgresVectorStore(
-		builder.Configuration.GetConnectionString("sqlConnection"),
-        768);
-});
 builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
 
 builder.Services.AddNpgsql<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));

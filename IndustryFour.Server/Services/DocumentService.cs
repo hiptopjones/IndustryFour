@@ -7,12 +7,12 @@ namespace IndustryFour.Server.Services;
 public class DocumentService : IDocumentService
 {
     private readonly IDocumentRepository _documentRepository;
-    private readonly IDocumentIndex _documentIndex;
+    private readonly IDocumentIndexService _documentIndexService;
 
-    public DocumentService(IDocumentRepository documentRepository, IDocumentIndex documentIndex)
+    public DocumentService(IDocumentRepository documentRepository, IDocumentIndexService documentIndexService)
     {
         _documentRepository = documentRepository;
-        _documentIndex = documentIndex;
+        _documentIndexService = documentIndexService;
     }
 
     public async Task<IEnumerable<Document>> GetAll()
@@ -27,28 +27,22 @@ public class DocumentService : IDocumentService
 
     public async Task<Document> Add(Document document)
     {
-        if (_documentRepository.Search(d => d.Title == document.Title).Result.Any())
-        {
-            return null;
-        }
+        // TODO: Do a check for duplicate entries (content hash?)
 
         await _documentRepository.Add(document);
 
         // Retrieve the document so we get the category filled in
         document = await _documentRepository.GetById(document.Id);
-        await _documentIndex.Add(document);
+        await _documentIndexService.Add(document);
 
         return document;
     }
 
     public async Task<Document> Update(Document document)
     {
-        if (_documentRepository.Search(d => d.Title == document.Title && d.Id != document.Id).Result.Any())
-        {
-            return null;
-        }
-
         await _documentRepository.Update(document);
+
+        // TODO: Update the index
         //await _documentIndex.Update(document);
 
         return document;
@@ -57,9 +51,11 @@ public class DocumentService : IDocumentService
     public async Task<bool> Remove(Document document)
     {
         await _documentRepository.Remove(document);
-        //await _documentIndex.Remove(document);
+		
+        // TODO: Remove the index
+		//await _documentIndex.Remove(document);
 
-        return true;
+		return true;
     }
 
     public async Task<IEnumerable<Document>> GetDocumentsByCategory(int categoryId)

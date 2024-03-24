@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
+using Pgvector.EntityFrameworkCore;
 
 namespace IndustryFour.Server.Context;
 
@@ -7,13 +8,7 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<DocumentStor
 {
     public DocumentStoreDbContext CreateDbContext(string[] args)
     {
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json").Build();
-
-        var builder = new DbContextOptionsBuilder<DocumentStoreDbContext>()
-            .UseNpgsql(configuration.GetConnectionString("sqlConnection"));
-
-        return new DocumentStoreDbContext(builder.Options);
+        var builder = new DbContextOptionsBuilder<DocumentStoreDbContext>();        
+		return new DocumentStoreDbContext(builder.Options);
     }
 }

@@ -24,7 +24,6 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
 
 		builder.Property(b => b.Description)
 			.IsRequired()
-			.HasColumnType("varchar(350)")
 			.HasColumnName("description");
 
 		builder.Property(b => b.ContentUrl)

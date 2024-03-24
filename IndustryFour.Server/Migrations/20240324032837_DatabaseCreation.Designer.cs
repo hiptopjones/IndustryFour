@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Pgvector;
 
 #nullable disable
 
 namespace IndustryFour.Server.Migrations
 {
     [DbContext(typeof(DocumentStoreDbContext))]
-    [Migration("20240323074227_DatabaseCreation")]
+    [Migration("20240324032837_DatabaseCreation")]
     partial class DatabaseCreation
     {
         /// <inheritdoc />
@@ -20,9 +21,10 @@ namespace IndustryFour.Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "vector");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("IndustryFour.Server.Models.Category", b =>
@@ -36,7 +38,7 @@ namespace IndustryFour.Server.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(150)")
+                        .HasColumnType("text")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
@@ -56,6 +58,36 @@ namespace IndustryFour.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IndustryFour.Server.Models.Chunk", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<int>("DocumentId")
+                        .HasColumnType("integer")
+                        .HasColumnName("document_id");
+
+                    b.Property<Vector>("Embedding")
+                        .IsRequired()
+                        .HasColumnType("vector(768)")
+                        .HasColumnName("embedding");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("chunks", (string)null);
+                });
+
             modelBuilder.Entity("IndustryFour.Server.Models.Document", b =>
                 {
                     b.Property<int>("Id")
@@ -67,7 +99,7 @@ namespace IndustryFour.Server.Migrations
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("varchar(150)")
+                        .HasColumnType("text")
                         .HasColumnName("author");
 
                     b.Property<int>("CategoryId")
@@ -76,12 +108,12 @@ namespace IndustryFour.Server.Migrations
 
                     b.Property<string>("ContentUrl")
                         .IsRequired()
-                        .HasColumnType("varchar(150)")
+                        .HasColumnType("text")
                         .HasColumnName("content_url");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(350)")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<DateTime>("PublishDate")
@@ -90,12 +122,12 @@ namespace IndustryFour.Server.Migrations
 
                     b.Property<string>("SourceUrl")
                         .IsRequired()
-                        .HasColumnType("varchar(150)")
+                        .HasColumnType("text")
                         .HasColumnName("source_url");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(150)")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("Id");
@@ -103,6 +135,16 @@ namespace IndustryFour.Server.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("documents", (string)null);
+                });
+
+            modelBuilder.Entity("IndustryFour.Server.Models.Chunk", b =>
+                {
+                    b.HasOne("IndustryFour.Server.Models.Document", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .IsRequired();
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("IndustryFour.Server.Models.Document", b =>
