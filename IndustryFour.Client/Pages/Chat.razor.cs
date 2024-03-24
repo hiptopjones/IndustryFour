@@ -29,7 +29,7 @@ namespace IndustryFour.Client.Pages
             Response = null;
             Error = null;
 
-            // Forces a render
+            // Forces a render so the button gets disabled immediately
             await Task.Delay(1);
 
             await OnPromptSubmitted();
