@@ -50,11 +50,10 @@ public class DocumentService : IDocumentService
 
     public async Task<bool> Remove(Document document)
     {
+        // Order reversed from Add()
+        await _documentIndexService.Remove(document);
         await _documentRepository.Remove(document);
 		
-        // TODO: Remove the index
-		//await _documentIndex.Remove(document);
-
 		return true;
     }
 

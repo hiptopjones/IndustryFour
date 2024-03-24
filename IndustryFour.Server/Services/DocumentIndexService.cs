@@ -52,9 +52,9 @@ namespace IndustryFour.Server.Services
             }
         }
 
-        public Task Remove(Document document)
+        public async Task Remove(Document document)
         {
-            throw new NotImplementedException();
+            await _chunkService.RemoveByDocumentId(document.Id);
         }
 
         public Task Update(Document document)

@@ -40,8 +40,14 @@ public class ChunkService : IChunkService
         await _chunkRepository.Remove(chunk);
         return true;
     }
+    
+    public async Task<bool> RemoveByDocumentId(int documentId)
+    {
+        await _chunkRepository.RemoveByDocumentId(documentId);
+        return true;
+    }
 
-	public async Task<IEnumerable<Chunk>> GetChunksByDistance(Vector vector, int k)
+    public async Task<IEnumerable<Chunk>> GetChunksByDistance(Vector vector, int k)
     {
         var chunks = await _chunkRepository.GetChunksByDistance(vector, k);
         return chunks;

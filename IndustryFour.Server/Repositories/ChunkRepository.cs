@@ -6,17 +6,23 @@ using Pgvector.EntityFrameworkCore;
 
 namespace IndustryFour.Server.Repositories
 {
-	public class ChunkRepository : Repository<Chunk>, IChunkRepository
+    public class ChunkRepository : Repository<Chunk>, IChunkRepository
     {
         public ChunkRepository(DocumentStoreDbContext context) : base(context)
         {
         }
 
-		public async Task<IEnumerable<Chunk>> GetChunksByDistance(Vector vector, int k)
+        public async Task<bool> RemoveByDocumentId(int documentId)
+        {
+            DbSet.RemoveRange(Db.Chunks.Where(x => x.DocumentId == documentId));
+            return true;
+        }
+
+        public async Task<IEnumerable<Chunk>> GetChunksByDistance(Vector vector, int k)
 		{
 			// TODO: Should do something like table-splitting to avoid bringing in the embedding vector here?
 
-            var chunks = await Db.Chunks
+            var chunks = await DbSet
 				.AsNoTracking()
                 .Include(x => x.Document)
                 .ThenInclude(x => x.Category)
@@ -26,6 +32,5 @@ namespace IndustryFour.Server.Repositories
 
             return chunks;
 		}
-
-	}
+    }
 }

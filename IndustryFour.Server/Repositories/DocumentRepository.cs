@@ -12,7 +12,7 @@ namespace IndustryFour.Server.Repositories
 
         public override async Task<List<Document>> GetAll()
         {
-            return await Db.Documents
+            return await DbSet
                 .AsNoTracking()
                 .Include(d => d.Category)
                 .OrderBy(d => d.Title)
@@ -21,7 +21,7 @@ namespace IndustryFour.Server.Repositories
 
         public override async Task<Document> GetById(int id)
         {
-            return await Db.Documents
+            return await DbSet
                 .AsNoTracking()
                 .Include(d => d.Category)
                 .Where(d => d.Id == id)
@@ -35,7 +35,7 @@ namespace IndustryFour.Server.Repositories
 
         public async Task<IEnumerable<Document>> SearchDocumentWithCategory(string searchedValue)
         {
-            return await Db.Documents.AsNoTracking()
+            return await DbSet.AsNoTracking()
                 .Include(d => d.Category)
                 .Where(d => d.Title.Contains(searchedValue) ||
                             d.Author.Contains(searchedValue) ||
