@@ -1,6 +1,7 @@
 using IndustryFour.Shared.Dtos.Chat;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Diagnostics;
 using System.Net.Http.Json;
 
 namespace IndustryFour.Client.Pages
@@ -18,8 +19,12 @@ namespace IndustryFour.Client.Pages
         private string Error { get; set; }
         private bool IsTaskRunning { get; set; }
 
+        private Stopwatch Stopwatch { get; set; }
+
         private async Task Submit()
         {
+            Stopwatch = Stopwatch.StartNew();
+
             IsTaskRunning = true;
             Response = null;
             Error = null;
@@ -29,6 +34,7 @@ namespace IndustryFour.Client.Pages
 
             await OnPromptSubmitted();
 
+            // Clear the form
             Request = new ChatRequestDto();
 
             IsTaskRunning = false;
@@ -51,6 +57,10 @@ namespace IndustryFour.Client.Pages
             catch (Exception ex)
             {
                 Error = ex.ToString();
+            }
+            finally
+            {
+                Stopwatch.Stop();
             }
         }
     }

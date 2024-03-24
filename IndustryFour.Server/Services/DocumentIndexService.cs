@@ -62,13 +62,13 @@ namespace IndustryFour.Server.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<string>> SimilaritySearch(string text, int k)
+        public async Task<IEnumerable<Chunk>> SimilaritySearch(string text, int k)
 		{
 			float[] embedding = await _embeddingProvider.EmbedChunk(text);
             Vector vector = new Vector(embedding);
 
             var relevantChunks = await _chunkService.GetChunksByDistance(vector, k);
-            return relevantChunks.Select(x => x.Content);
+            return relevantChunks;
         }
     }
 }

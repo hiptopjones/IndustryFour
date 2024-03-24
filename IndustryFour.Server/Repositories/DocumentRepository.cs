@@ -12,14 +12,18 @@ namespace IndustryFour.Server.Repositories
 
         public override async Task<List<Document>> GetAll()
         {
-            return await Db.Documents.AsNoTracking().Include(d => d.Category)
+            return await Db.Documents
+                .AsNoTracking()
+                .Include(d => d.Category)
                 .OrderBy(d => d.Title)
                 .ToListAsync();
         }
 
         public override async Task<Document> GetById(int id)
         {
-            return await Db.Documents.AsNoTracking().Include(d => d.Category)
+            return await Db.Documents
+                .AsNoTracking()
+                .Include(d => d.Category)
                 .Where(d => d.Id == id)
                 .FirstOrDefaultAsync();
         }

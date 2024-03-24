@@ -26,7 +26,13 @@
                 <div class="card-text">
                     @foreach (var chunk in Response.Chunks)
                     {
-                        <p style="white-space: pre-line">@chunk</p>
+                        <p style="white-space: pre-line">@chunk.Content</p>
+                        <p>
+                            <em>
+                                Source: <a href="@chunk.Document.SourceUrl">@chunk.Document.Title</a><br />
+                                @chunk.Document.CategoryName by <strong>@chunk.Document.Author</strong>
+                            </em>
+                        </p>
                         <hr />
                     }
 
@@ -48,6 +54,7 @@
         <div class="card card-body mb-3">
             <h5 class="card-title">Answer</h5>
             <p class="card-text" style="white-space: pre-line">@Response.Answer</p>
+            <p><em>Round-trip took @(Stopwatch.Elapsed.TotalSeconds.ToString("N1"))s</em></p>
         </div>
 
         <p class="mb-3">
