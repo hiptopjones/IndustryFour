@@ -1,0 +1,19 @@
+﻿.user-message {
+    background-color: #ffffff;
+}
+
+.assistant-message {
+    background-color: #fcfcfc;
+}
+
+.error-message {
+    background-color: #fcfcfc;
+}
+
+.chat-icon {
+    width: 40px;
+}
+
+.disclaimer-text {
+    font-size: 0.8rem;
+}

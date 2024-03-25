@@ -1,0 +1,81 @@
+﻿@page "/chat"
+
+<PageTitle>Industry 4.0 - Chat</PageTitle>
+
+<h1>Chat</h1>
+
+@foreach (var message in Messages)
+{
+    @if (message.IsUserMessage)
+    {
+        <div class="row user-message">
+            <div class="row p-3">
+                <div class="col-1 text-center">
+                    <img class="chat-icon rounded-circle" src="images/user.png" title="User" />
+                </div>
+                <div class="col-11">
+                    <div class="p-2">@message.UserMessage.Question</div>
+                </div>
+            </div>
+        </div>
+    }
+    else // assistant message
+    {
+        if (message.ErrorMessage is not null)
+        {
+            <div class="row error-message">
+                <div class="row p-3">
+                    <div class="col-1 text-center">
+                        <img class="chat-icon rounded-circle" src="images/error.png" title="Error" />
+                    </div>
+                    <div class="col-11">
+                        <div class="p-2">@message.ErrorMessage</div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row assistant-message">
+                <div class="row p-3">
+                    <div class="col-1 text-center">
+                        <img class="chat-icon rounded-circle" src="images/assistant.png" title="Assistant" />
+                    </div>
+                    <div class="col-11">
+                        @if (message.AssistantMessage is not null)
+                        {
+                            <div class="p-2">@message.AssistantMessage.Answer</div>
+                        }
+                        else
+                        {
+                            <div class="text-center p-2">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+<div class="row user-message">
+    <div class="row p-3">
+        <div class="col-1 text-center">
+            <img class="chat-icon rounded-circle" src="images/user.png" />
+        </div>
+        <div class="col-11">
+            <EditForm Model="Request" OnSubmit="Submit">
+                <div class="mb-3">
+                    <InputText type="text" class="form-control" id="promptText" placeholder="Enter your question..." disabled="@IsTaskRunning" @bind-Value="Request.Question" />
+                    <p class="disclaimer-text px-1">
+                        <em>WARNING: This tool is only intended to guide your research.  Use good judgement and validate important details when following any advice provided here.</em>
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-primary" disabled="@IsTaskRunning">Ask Question!</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
