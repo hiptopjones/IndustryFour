@@ -29,7 +29,18 @@ namespace IndustryFour.Server.Services
         public async Task Add(Document document)
         {
             string content = await _httpClient.GetStringAsync(document.ContentUrl);
-            var textChunks = await _textSplitter.Split(content);
+
+            IEnumerable<string> textChunks;
+            if (document.SourceUrl.Contains("linkedin.com"))
+            {
+                // No chunking on LinkedIn posts
+                // TODO: Control this a more formal way
+                textChunks = [content];
+            }
+            else
+            {
+                textChunks = await _textSplitter.Split(content);
+            }
 
             int chunkIndex = 0;
 
