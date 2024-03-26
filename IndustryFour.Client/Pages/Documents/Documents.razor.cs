@@ -24,12 +24,12 @@ namespace IndustryFour.Client.Pages.Documents
 
         private async Task GetDocuments()
         {
-            DocumentResults = await DocumentRepository.GetDocuments();
+            DocumentResults = await DocumentRepository.GetAll();
         }
 
         private async Task DeleteProduct(int id)
         {
-            await DocumentRepository.DeleteDocument(id);
+            await DocumentRepository.Delete(id);
             await GetDocuments();
         }
 

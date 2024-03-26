@@ -4,11 +4,11 @@ namespace IndustryFour.Client.HttpRepository
 {
     public interface IDocumentHttpRepository
     {
-        Task<List<DocumentResultDto>> GetDocuments();
-        Task<DocumentResultDto> GetDocument(int id);
-        Task CreateDocument(DocumentAddDto document);
-        Task<string> UploadDocumentFile(MultipartFormDataContent content);
-        Task UpdateDocument(DocumentEditDto document);
-        Task DeleteDocument(int id);
+        Task<List<DocumentResultDto>> GetAll();
+        Task<DocumentResultDto> GetById(int id);
+        Task Create(DocumentAddDto document);
+        Task<string> UploadFile(MultipartFormDataContent content);
+        Task Update(DocumentEditDto document);
+        Task Delete(int id);
 	}
 }

@@ -30,7 +30,7 @@ namespace IndustryFour.Client.Components
 				content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
 				content.Add(new StreamContent(stream, Convert.ToInt32(documentFile.Size)), "document", documentFile.Name);
 
-                ContentUrl = await Repository.UploadDocumentFile(content);
+                ContentUrl = await Repository.UploadFile(content);
 
 				await OnChange.InvokeAsync(ContentUrl);
 			}

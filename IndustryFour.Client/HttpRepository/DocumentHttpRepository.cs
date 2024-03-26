@@ -12,24 +12,24 @@ namespace IndustryFour.Client.HttpRepository
             _client = client;
         }
 
-        public async Task<List<DocumentResultDto>> GetDocuments()
+        public async Task<List<DocumentResultDto>> GetAll()
         {
             var documents = await _client.GetFromJsonAsync<List<DocumentResultDto>>("documents");
             return documents;
         }
 
-		public async Task<DocumentResultDto> GetDocument(int id)
+		public async Task<DocumentResultDto> GetById(int id)
 		{
 			var document = await _client.GetFromJsonAsync<DocumentResultDto>($"documents/{id}");
 			return document;
 		}
 
-        public async Task CreateDocument(DocumentAddDto document)
+        public async Task Create(DocumentAddDto document)
         {
             await _client.PostAsJsonAsync("documents", document);
         }
 
-		public async Task<string> UploadDocumentFile(MultipartFormDataContent content)
+		public async Task<string> UploadFile(MultipartFormDataContent content)
 		{
             var postResult = await _client.PostAsync("upload", content);
             var contentUrlPath = await postResult.Content.ReadAsStringAsync();
@@ -38,10 +38,10 @@ namespace IndustryFour.Client.HttpRepository
             return contentUrl;
 		}
 
-        public async Task UpdateDocument(DocumentEditDto document) =>
+        public async Task Update(DocumentEditDto document) =>
             await _client.PutAsJsonAsync(Path.Combine("documents", document.Id.ToString()), document);
 
-        public async Task DeleteDocument(int id) =>
+        public async Task Delete(int id) =>
             await _client.DeleteAsync(Path.Combine("documents", id.ToString()));
     }
 }

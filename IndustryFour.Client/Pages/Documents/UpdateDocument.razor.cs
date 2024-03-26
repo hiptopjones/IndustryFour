@@ -29,14 +29,14 @@ namespace IndustryFour.Client.Pages.Documents
         protected override async Task OnInitializedAsync()
         {
             _document = Mapper.Map<DocumentEditDto>(
-                await DocumentRepository.GetDocument(Id));
+                await DocumentRepository.GetById(Id));
 
             Interceptor.RegisterEvent();
         }
 
         private async Task Update()
         {
-            await DocumentRepository.UpdateDocument(_document);
+            await DocumentRepository.Update(_document);
 
             // Show a success message
             ToastService.ShowSuccess($"Action successful.  Document \"{_document.Title}\" successfully updated.");

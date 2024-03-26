@@ -16,7 +16,7 @@ namespace IndustryFour.Client.Pages.Documents
 
         protected override async Task OnInitializedAsync()
         {
-            Document = await DocumentRepository.GetDocument(DocumentId);
+            Document = await DocumentRepository.GetById(DocumentId);
         }
     }
 }

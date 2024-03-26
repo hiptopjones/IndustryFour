@@ -44,7 +44,17 @@
                     <div class="col-11">
                         @if (message.AssistantMessage is not null)
                         {
-                            <div class="p-2">@message.AssistantMessage.Answer</div>
+                            <div class="p-2">
+                                @message.AssistantMessage.Answer
+
+                                -- Sources:
+                                @foreach (var chunk in message.AssistantMessage.Chunks)
+                                {
+                                    <span class="px-1">
+                                        [<a href="/chunks/@chunk.Id" target="_blank">@chunk.Id</a>]
+                                    </span>
+                                }
+                            </div>
                         }
                         else
                         {

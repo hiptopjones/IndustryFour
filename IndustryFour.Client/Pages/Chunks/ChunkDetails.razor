@@ -1,0 +1,23 @@
+﻿@page "/chunks/{chunkId:int}"
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h2>Chunk @ChunkId</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="chunk-content my-2 p-3">
+                    @Chunk.Content
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>From:</strong> <a href="/documents/@Document.Id">@Document.Title</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,7 +26,7 @@ namespace IndustryFour.Client.Pages.Documents
 
         private async Task Create()
         {
-            await DocumentRepository.CreateDocument(_document);
+            await DocumentRepository.Create(_document);
 
             // Show a success message
             ToastService.ShowSuccess($"Action successful.  Document \"{_document.Title}\" successfully added.");
