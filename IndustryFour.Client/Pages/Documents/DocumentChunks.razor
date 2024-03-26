@@ -1,0 +1,14 @@
+﻿@page "/documents/{documentId:int}/chunks"
+@using IndustryFour.Client.Components
+
+<PageTitle>Industry 4.0 - Documents</PageTitle>
+
+<h1>Chunks for Document @DocumentId</h1>
+
+<ChunkTable Chunks="ChunkResults" />
+<br />
+<div class="row">
+    <div class="col">
+        <a href="/documents/@DocumentId" class="btn btn-success">Back</a>
+    </div>
+</div>

@@ -12,13 +12,24 @@ namespace IndustryFour.Server.Repositories
         {
         }
 
+        public async Task<IEnumerable<Chunk>> GetByDocumentId(int documentId)
+        {
+            var chunks = await DbSet
+                .AsNoTracking()
+                .Include(x => x.Document)
+                .Where(x => x.DocumentId == documentId)
+                .ToListAsync();
+
+            return chunks;
+        }
+
         public async Task<bool> RemoveByDocumentId(int documentId)
         {
             DbSet.RemoveRange(Db.Chunks.Where(x => x.DocumentId == documentId));
-            return true;
-        }
+            return await Task.FromResult(true);
+        } 
 
-        public async Task<IEnumerable<Chunk>> GetChunksByDistance(Vector vector, int k)
+        public async Task<IEnumerable<Chunk>> GetByDistance(Vector vector, int k)
 		{
 			// TODO: Should do something like table-splitting to avoid bringing in the embedding vector here?
 

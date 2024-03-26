@@ -28,7 +28,7 @@ namespace IndustryFour.Server.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Document>> GetDocumentsByCategory(int categoryId)
+        public async Task<IEnumerable<Document>> GetByCategoryId(int categoryId)
         {
             return await Search(d => d.CategoryId == categoryId);
         }

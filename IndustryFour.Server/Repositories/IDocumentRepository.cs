@@ -10,7 +10,7 @@ namespace IndustryFour.Server.Repositories
 		new Task<List<Document>> GetAll();
         new Task<Document> GetById(int id);
 
-        Task<IEnumerable<Document>> GetDocumentsByCategory(int categoryId);
+        Task<IEnumerable<Document>> GetByCategoryId(int categoryId);
         Task<IEnumerable<Document>> SearchDocumentWithCategory(string searchedValue);
     }
 }

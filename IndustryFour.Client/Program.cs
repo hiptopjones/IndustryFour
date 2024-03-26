@@ -21,6 +21,7 @@ builder.Services.AddHttpClientInterceptor();
 builder.Services.AddScoped(provider => provider.GetService<IHttpClientFactory>().CreateClient("CoreAPI"));
 
 builder.Services.AddScoped<IDocumentHttpRepository, DocumentHttpRepository>();
+builder.Services.AddScoped<IChunkHttpRepository, ChunkHttpRepository>();
 
 builder.Services.AddScoped<HttpInterceptorService>();
 

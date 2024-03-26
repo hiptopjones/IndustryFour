@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /IndustryFour.Server/documents.db
 /IndustryFour.Server/documents.db-shm
 /IndustryFour.Server/documents.db-wal
+/IndustryFour.Server/StaticFiles/Documents

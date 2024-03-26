@@ -6,6 +6,6 @@ namespace IndustryFour.Shared.Dtos.Chunk
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public DocumentResultDto Document { get; set; }
+        public int DocumentId { get; set; }
     }
 }

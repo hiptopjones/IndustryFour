@@ -59,7 +59,7 @@ public class DocumentService : IDocumentService
 
     public async Task<IEnumerable<Document>> GetDocumentsByCategory(int categoryId)
     {
-        return await _documentRepository.GetDocumentsByCategory(categoryId);
+        return await _documentRepository.GetByCategoryId(categoryId);
     }
 
     public async Task<IEnumerable<Document>> Search(string documentTitle)

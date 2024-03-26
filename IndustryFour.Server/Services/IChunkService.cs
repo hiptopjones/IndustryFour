@@ -11,6 +11,8 @@ public interface IChunkService : IDisposable
     Task<Chunk> Update(Chunk chunk);
     Task<bool> Remove(Chunk chunk);
 
+    Task<IEnumerable<Chunk>> GetByDocumentId(int documentId);
     Task<bool> RemoveByDocumentId(int documentId);
-    Task<IEnumerable<Chunk>> GetChunksByDistance(Vector vector, int k);
+    
+    Task<IEnumerable<Chunk>> GetByDistance(Vector vector, int k);
 }

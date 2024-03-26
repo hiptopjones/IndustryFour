@@ -1,0 +1,36 @@
+﻿@if (Chunks == null)
+{
+	<span>
+		Loading documents...
+	</span>
+}
+else if (Chunks.Any())
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Content</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var chunk in Chunks)
+			{
+				<tr>
+					<td class="align-middle">
+						@chunk.Id
+					</td>
+					<td class="align-middle">
+						@chunk.Content
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<span>
+		No documents
+	</span>
+}

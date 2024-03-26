@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using IndustryFour.Shared.Dtos.Category;
-using IndustryFour.Shared.Dtos.Document;
 using IndustryFour.Server.Models;
+using IndustryFour.Shared.Dtos.Category;
 using IndustryFour.Shared.Dtos.Chunk;
+using IndustryFour.Shared.Dtos.Document;
 
 namespace IndustryFour.Server
 {
-    public class AutoMapperProfile : Profile
+	public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
@@ -17,8 +17,8 @@ namespace IndustryFour.Server
             CreateMap<DocumentAddDto, Document>();
             CreateMap<DocumentEditDto, Document>();
 			CreateMap<Document, DocumentResultDto>();
-			
-            CreateMap<Chunk, ChunkResultDto>();
+
+			CreateMap<Chunk, ChunkResultDto>();
 		}
 	}
 }

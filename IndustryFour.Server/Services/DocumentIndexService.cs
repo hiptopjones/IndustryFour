@@ -67,7 +67,7 @@ namespace IndustryFour.Server.Services
 			float[] embedding = await _embeddingProvider.EmbedChunk(text);
             Vector vector = new Vector(embedding);
 
-            var relevantChunks = await _chunkService.GetChunksByDistance(vector, k);
+            var relevantChunks = await _chunkService.GetByDistance(vector, k);
             return relevantChunks;
         }
     }

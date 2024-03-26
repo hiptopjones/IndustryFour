@@ -19,8 +19,6 @@ public class DocumentsController : Controller
         _mapper = mapper;
         _documentService = documentService;
         _logger = logger;
-
-        _logger.LogInfo("Instantiated DocumentsController");
     }
 
     [HttpGet]
