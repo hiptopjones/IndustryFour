@@ -9,8 +9,10 @@ public class DocumentStoreDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
 	public DbSet<Document> Documents { get; set; }
 	public DbSet<Chunk> Chunks { get; set; }
+    public DbSet<Conversation> Conversations { get; set; }
+    public DbSet<Turn> Turns { get; set; }
 
-	public DocumentStoreDbContext(DbContextOptions options)
+    public DocumentStoreDbContext(DbContextOptions options)
         : base(options)
     {
     }

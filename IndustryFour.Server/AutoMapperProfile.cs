@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using IndustryFour.Server.Models;
 using IndustryFour.Shared.Dtos.Category;
+using IndustryFour.Shared.Dtos.Chat;
 using IndustryFour.Shared.Dtos.Chunk;
 using IndustryFour.Shared.Dtos.Document;
 
@@ -19,6 +20,9 @@ namespace IndustryFour.Server
 			CreateMap<Document, DocumentResultDto>();
 
 			CreateMap<Chunk, ChunkResultDto>();
-		}
-	}
+
+            CreateMap<ChatRequest, ChatRequestDto>().ReverseMap();
+            CreateMap<ChatResponse, ChatResponseDto>().ReverseMap();
+        }
+    }
 }

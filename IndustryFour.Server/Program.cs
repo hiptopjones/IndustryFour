@@ -42,10 +42,15 @@ builder.Services.AddScoped<DocumentStoreDbContext>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 builder.Services.AddScoped<IChunkRepository, ChunkRepository>();
+builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
+builder.Services.AddScoped<ITurnRepository, TurnRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IChunkService, ChunkService>();
+builder.Services.AddScoped<IConversationService, ConversationService>();
+builder.Services.AddScoped<ITurnService, TurnService>();
 builder.Services.AddScoped<IDocumentIndexService, DocumentIndexService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp => 
     new TextSplitter(
         separator: ".",

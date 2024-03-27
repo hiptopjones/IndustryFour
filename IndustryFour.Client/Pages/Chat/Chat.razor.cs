@@ -58,6 +58,9 @@ namespace IndustryFour.Client.Pages.Chat
                 {
                     Response = await response.Content.ReadFromJsonAsync<ChatResponseDto>();
                     Messages.Last().AssistantMessage = Response;
+
+                    // Always transfer this across to track turns in a conversation
+                    Request.ConversationId = Response.ConversationId;
                 }
                 else
                 {
