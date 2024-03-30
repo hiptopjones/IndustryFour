@@ -53,10 +53,10 @@ public class ChunkService : IChunkService
         return true;
     }
 
-    public async Task<IEnumerable<Chunk>> GetByDistance(Vector vector, int k)
+    public async Task<IEnumerable<ChunkMatch>> GetByDistance(Vector vector, int k)
     {
-        var chunks = await _chunkRepository.GetByDistance(vector, k);
-        return chunks;
+        var chunksMatches = await _chunkRepository.GetByDistance(vector, k);
+        return chunksMatches;
     }
 
     public void Dispose()

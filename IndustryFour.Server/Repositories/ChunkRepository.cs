@@ -3,6 +3,7 @@ using IndustryFour.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Pgvector;
 using Pgvector.EntityFrameworkCore;
+using System.Linq;
 
 namespace IndustryFour.Server.Repositories
 {
@@ -29,19 +30,18 @@ namespace IndustryFour.Server.Repositories
             return await Task.FromResult(true);
         } 
 
-        public async Task<IEnumerable<Chunk>> GetByDistance(Vector vector, int k)
+        public async Task<IEnumerable<ChunkMatch>> GetByDistance(Vector vector, int k)
 		{
-			// TODO: Should do something like table-splitting to avoid bringing in the embedding vector here?
-
-            var chunks = await DbSet
-				.AsNoTracking()
+            var chunkMatches = await DbSet
+                .AsNoTracking()
                 .Include(x => x.Document)
                 .ThenInclude(x => x.Category)
-                .OrderBy(x => x.Embedding.L2Distance(vector))
+                .Select(x => new ChunkMatch { Chunk = x, Distance = x.Embedding.L2Distance(vector) })
+                .OrderBy(x => x.Distance)
                 .Take(k)
                 .ToListAsync();
-
-            return chunks;
+;
+            return chunkMatches;
 		}
     }
 }

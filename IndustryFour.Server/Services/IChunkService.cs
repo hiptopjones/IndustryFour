@@ -14,5 +14,5 @@ public interface IChunkService : IDisposable
     Task<IEnumerable<Chunk>> GetByDocumentId(int documentId);
     Task<bool> RemoveByDocumentId(int documentId);
     
-    Task<IEnumerable<Chunk>> GetByDistance(Vector vector, int k);
+    Task<IEnumerable<ChunkMatch>> GetByDistance(Vector vector, int k);
 }

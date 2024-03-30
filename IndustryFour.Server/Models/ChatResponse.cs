@@ -3,7 +3,7 @@
     public class ChatResponse
     {
         public string Answer { get; set; }
-        public List<Chunk> Chunks { get; set; }
+        public List<ChunkMatch> ChunkMatches { get; set; }
         public string Prompt { get; set; }
         public TimeSpan SimilaritySearchDuration { get; set; }
         public TimeSpan ChatProviderDuration { get; set; }

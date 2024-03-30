@@ -8,6 +8,6 @@ namespace IndustryFour.Server.Services
         Task Update(Document document);
         Task Remove(Document document);
 
-        Task<IEnumerable<Chunk>> SimilaritySearch(string text, int k);
+        Task<IEnumerable<ChunkMatch>> SimilaritySearch(string text, int k);
     }
 }

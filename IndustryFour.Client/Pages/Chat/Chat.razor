@@ -48,10 +48,10 @@
                                 @message.AssistantMessage.Answer
 
                                 -- Sources:
-                                @foreach (var chunk in message.AssistantMessage.Chunks)
+                                @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
                                 {
                                     <span class="px-1">
-                                        [<a href="/chunks/@chunk.Id" target="_blank">@chunk.Id</a>]
+                                        [<a href="/chunks/@chunkMatch.Chunk.Id" target="_blank">@chunkMatch.Chunk.Id</a>]
                                     </span>
                                 }
                             </div>

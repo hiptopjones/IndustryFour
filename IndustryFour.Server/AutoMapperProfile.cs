@@ -19,7 +19,8 @@ namespace IndustryFour.Server
             CreateMap<DocumentEditDto, Document>();
 			CreateMap<Document, DocumentResultDto>();
 
-			CreateMap<Chunk, ChunkResultDto>();
+            CreateMap<Chunk, ChunkResultDto>();
+            CreateMap<ChunkMatch, ChunkMatchDto>();
 
             CreateMap<ChatRequest, ChatRequestDto>().ReverseMap();
             CreateMap<ChatResponse, ChatResponseDto>().ReverseMap();

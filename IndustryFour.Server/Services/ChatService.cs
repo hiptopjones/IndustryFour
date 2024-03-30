@@ -47,8 +47,8 @@ namespace IndustryFour.Server.Services
         {
             Stopwatch searchTimer = Stopwatch.StartNew();
 
-            var chunks = await _index.SimilaritySearch(request.Question, request.MaxSearchResults != 0 ? request.MaxSearchResults : 1);
-            response.Chunks = chunks.ToList();
+            var chunkMatches = await _index.SimilaritySearch(request.Question, request.MaxSearchResults != 0 ? request.MaxSearchResults : 1);
+            response.ChunkMatches = chunkMatches.ToList();
 
             response.SimilaritySearchDuration = searchTimer.Elapsed;
         }
@@ -57,7 +57,7 @@ namespace IndustryFour.Server.Services
         {
             var contextOnlyLimiter = request.UseContextOnly ? "If the answer is not in the provided context then just say that you don't know, don't try to make up an answer." : "";
             var conciseResponseLimiter = request.UseConciseResponse ? "Keep the answers short and to the point, unless asked to expand.\n" : "";
-            var relevantChunks = string.Join("\n\n", response.Chunks.Select(x => x.Content));
+            var relevantChunks = string.Join("\n\n", response.ChunkMatches.Select(x => x.Chunk.Content));
 
             var prompt = $"""
                 You are a helpful assistant.
