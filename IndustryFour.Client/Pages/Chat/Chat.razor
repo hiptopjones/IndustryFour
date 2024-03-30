@@ -46,14 +46,16 @@
                         {
                             <div class="p-2">
                                 @message.AssistantMessage.Answer
-
-                                // Sources:
-                                @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
-                                {
-                                    <span class="px-1">
-                                        [<a href="/chunks/@chunkMatch.Chunk.Id" target="_blank">@chunkMatch.Chunk.Id</a>]
-                                    </span>
-                                }
+                                <br/>
+                                <span class="disclaimer-text">
+                                    This response is generated using the following sources:
+                                    @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
+                                    {
+                                        <span class="px-1">
+                                            [<a href="/chunks/@chunkMatch.Chunk.Id" target="_blank">@chunkMatch.Chunk.Id</a>]
+                                        </span>
+                                    }
+                                </span>
                             </div>
                         }
                         else
@@ -81,7 +83,7 @@
                 <div class="mb-3">
                     <InputText type="text" class="form-control" id="promptText" placeholder="Enter your question..." disabled="@IsTaskRunning" @bind-Value="Request.Question" />
                     <p class="disclaimer-text px-1">
-                        <em>WARNING: This tool is only intended to guide your research.  Use good judgement and validate important details when following any advice provided here.</em>
+                        This tool is only intended to guide your research.  Use good judgement and validate important details when following any advice provided here.
                     </p>
                 </div>
                 <button type="submit" class="btn btn-primary" disabled="@IsTaskRunning">Ask Question!</button>

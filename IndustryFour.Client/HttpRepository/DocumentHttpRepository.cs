@@ -6,10 +6,12 @@ namespace IndustryFour.Client.HttpRepository
     public class DocumentHttpRepository : IDocumentHttpRepository
     {
         private readonly HttpClient _client;
-        
-        public DocumentHttpRepository(HttpClient client)
+        private readonly ApiConfiguration _apiConfiguration;
+
+        public DocumentHttpRepository(HttpClient client, ApiConfiguration apiConfiguration)
         {
             _client = client;
+            _apiConfiguration = apiConfiguration;
         }
 
         public async Task<List<DocumentResultDto>> GetAll()
@@ -33,15 +35,15 @@ namespace IndustryFour.Client.HttpRepository
 		{
             var postResult = await _client.PostAsync("upload", content);
             var contentUrlPath = await postResult.Content.ReadAsStringAsync();
-            var contentUrl = Path.Combine("https://localhost:5101", contentUrlPath);
+            var contentUrl = Path.Combine(_apiConfiguration.BaseAddress, contentUrlPath).Replace("\\", "/");
 
             return contentUrl;
 		}
 
         public async Task Update(DocumentEditDto document) =>
-            await _client.PutAsJsonAsync(Path.Combine("documents", document.Id.ToString()), document);
+            await _client.PutAsJsonAsync($"documents/{document.Id}", document);
 
         public async Task Delete(int id) =>
-            await _client.DeleteAsync(Path.Combine("documents", id.ToString()));
+            await _client.DeleteAsync($"documents/{id}");
     }
 }

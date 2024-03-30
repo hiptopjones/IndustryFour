@@ -16,4 +16,6 @@
 
 .disclaimer-text {
     font-size: 0.8rem;
+    font-style: italic;
+    color: darkgray
 }

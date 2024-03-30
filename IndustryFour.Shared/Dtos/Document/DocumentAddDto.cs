@@ -21,6 +21,6 @@ public class DocumentAddDto
     public string ContentUrl { get; set; }
 
     [Required(ErrorMessage = "{0} is a required field")]
-    public DateTime PublishDate { get; set; }
+    public DateTime PublishDate { get; set; } = DateTime.Now.Date;
     public string SourceUrl { get; set; }
 }
