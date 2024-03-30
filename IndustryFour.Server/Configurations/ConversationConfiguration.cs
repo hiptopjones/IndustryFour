@@ -22,6 +22,6 @@ public class ConversationConfiguration : IEntityTypeConfiguration<Conversation>
             )
             .HasColumnName("timestamp");
 
-        builder.ToTable("conversation");
+        builder.ToTable("conversations");
     }
 }

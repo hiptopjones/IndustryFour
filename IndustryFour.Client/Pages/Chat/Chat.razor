@@ -2,7 +2,7 @@
 
 <PageTitle>Industry 4.0 - Chat</PageTitle>
 
-<h1>Chat</h1>
+<h1>Chat with Walker</h1>
 
 @foreach (var message in Messages)
 {
@@ -47,7 +47,7 @@
                             <div class="p-2">
                                 @message.AssistantMessage.Answer
 
-                                -- Sources:
+                                // Sources:
                                 @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
                                 {
                                     <span class="px-1">

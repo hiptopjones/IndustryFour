@@ -28,7 +28,8 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.AllowAnyOrigin()
+            builder
+                .AllowAnyOrigin()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -80,8 +81,8 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
 app.UseCors();
+app.UseAuthorization();
 
 app.UseStaticFiles(new StaticFileOptions
 {
