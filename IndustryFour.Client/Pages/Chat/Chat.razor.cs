@@ -8,6 +8,9 @@ namespace IndustryFour.Client.Pages.Chat
     public partial class Chat
     {
         [Inject]
+        private ILogger<Chat> Logger { get; set; }
+
+        [Inject]
         private HttpClient HttpClient { get; set; }
 
         private List<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
@@ -20,6 +23,8 @@ namespace IndustryFour.Client.Pages.Chat
 
         private async Task Submit()
         {
+            Logger.LogInformation("Submit clicked");
+
             Stopwatch = Stopwatch.StartNew();
 
             IsTaskRunning = true;
@@ -47,10 +52,14 @@ namespace IndustryFour.Client.Pages.Chat
             await OnPromptSubmitted(request);
 
             IsTaskRunning = false;
+
+            Logger.LogInformation("Submit end");
         }
 
         private async Task OnPromptSubmitted(ChatRequestDto request)
         {
+            Logger.LogInformation("Submit handler started");
+
             try
             {
                 var response = await HttpClient.PostAsJsonAsync("chat", request);
@@ -70,6 +79,8 @@ namespace IndustryFour.Client.Pages.Chat
             }
             catch (Exception ex)
             {
+                Logger.LogError(ex, "Error during submit handler");
+
                 Error = ex.ToString();
                 Messages.Last().ErrorMessage = Error;
             }
@@ -77,6 +88,8 @@ namespace IndustryFour.Client.Pages.Chat
             {
                 Stopwatch.Stop();
             }
+
+            Logger.LogInformation("Submit handler ended ");
         }
     }
 }

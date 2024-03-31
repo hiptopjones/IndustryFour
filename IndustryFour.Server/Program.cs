@@ -6,90 +6,109 @@ using IndustryFour.Server.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using NLog;
+using NLog.Web;
 using System.Text.Json.Serialization;
 
-var builder = WebApplication.CreateBuilder(args);
 
-LogManager.Setup().LoadConfigurationFromFile(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
+var logger = LogManager.Setup().LoadConfigurationFromFile(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config")).GetCurrentClassLogger();
+logger.Debug("Main program setup");
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Logging.ClearProviders();
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+    builder.Host.UseNLog();
+
+    builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            // Prevent problems with EF Core doing automatic fix-up of navigation properties leading to cycles
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
+
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    builder.Services.AddCors(options =>
     {
-        // Prevent problems with EF Core doing automatic fix-up of navigation properties leading to cycles
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.AddDefaultPolicy(
+            builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
     });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.Configure<IISOptions>(options => { });
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+    builder.Services.AddSingleton<QuotesService>();
+    builder.Services.AddScoped<DocumentStoreDbContext>();
+    builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+    builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+    builder.Services.AddScoped<IChunkRepository, ChunkRepository>();
+    builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
+    builder.Services.AddScoped<ITurnRepository, TurnRepository>();
+    builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddScoped<IDocumentService, DocumentService>();
+    builder.Services.AddScoped<IChunkService, ChunkService>();
+    builder.Services.AddScoped<IConversationService, ConversationService>();
+    builder.Services.AddScoped<ITurnService, TurnService>();
+    builder.Services.AddScoped<IDocumentIndexService, DocumentIndexService>();
+    builder.Services.AddScoped<IChatService, ChatService>();
+    builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp =>
+        new TextSplitter(
+            separator: ".",
+            chunkSize: 1000,
+            chunkOverlap: 300));
+    builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
+    builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
 
-builder.Services.Configure<IISOptions>(options => { });
+    builder.Services.AddNpgsql<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
 
-builder.Services.AddSingleton<QuotesService>();
-builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
-builder.Services.AddScoped<DocumentStoreDbContext>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
-builder.Services.AddScoped<IChunkRepository, ChunkRepository>();
-builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
-builder.Services.AddScoped<ITurnRepository, TurnRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IDocumentService, DocumentService>();
-builder.Services.AddScoped<IChunkService, ChunkService>();
-builder.Services.AddScoped<IConversationService, ConversationService>();
-builder.Services.AddScoped<ITurnService, TurnService>();
-builder.Services.AddScoped<IDocumentIndexService, DocumentIndexService>();
-builder.Services.AddScoped<IChatService, ChatService>();
-builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp => 
-    new TextSplitter(
-        separator: ".",
-        chunkSize: 1000,
-        chunkOverlap: 300));
-builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
-builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
+    builder.Services.AddHttpClient();
 
-builder.Services.AddNpgsql<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
+    builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-builder.Services.AddHttpClient();
+    var app = builder.Build();
 
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
 
-var app = builder.Build();
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    else
+    {
+        app.UseHsts();
+    }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
+    app.UseHttpsRedirection();
+    app.UseCors();
+    app.UseAuthorization();
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+        RequestPath = new PathString("/StaticFiles")
+    });
+
+    app.MapControllers();
+
+    app.Run();
 }
-else
+catch (Exception ex)
 {
-    app.UseHsts();
+    logger.Error(ex, "Error during program setup");
+    throw;
 }
-
-app.UseHttpsRedirection();
-app.UseCors();
-app.UseAuthorization();
-
-app.UseStaticFiles(new StaticFileOptions
+finally
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
-    RequestPath = new PathString("/StaticFiles")
-});
-
-app.MapControllers();
-
-app.Run();
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+    NLog.LogManager.Shutdown();
+}

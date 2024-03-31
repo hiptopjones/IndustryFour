@@ -10,11 +10,11 @@ namespace IndustryFour.Server.Controllers;
 [ApiController]
 public class ChunksController : Controller
 {
-    private readonly ILoggerManager _logger;
+    private readonly ILogger<ChunksController> _logger;
     private readonly IChunkService _chunkService;
     private readonly IMapper _mapper;
 
-    public ChunksController(IMapper mapper, IChunkService chunkService, ILoggerManager logger)
+    public ChunksController(IMapper mapper, IChunkService chunkService, ILogger<ChunksController> logger)
     {
         _mapper = mapper;
         _chunkService = chunkService;

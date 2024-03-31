@@ -6,14 +6,14 @@ namespace IndustryFour.Server.Services
 {
 	public class DocumentIndexService : IDocumentIndexService
     {
-        private readonly ILoggerManager _logger;
+        private readonly ILogger<DocumentIndexService> _logger;
         private readonly HttpClient _httpClient;
         private readonly IChunkService _chunkService;
         private readonly ITextSplitter _textSplitter;
         private readonly IEmbeddingProvider _embeddingProvider;
 
         public DocumentIndexService(
-            ILoggerManager logger,
+            ILogger<DocumentIndexService> logger,
             HttpClient httpClient,
             IChunkService chunkService,
             ITextSplitter textSplitter,
@@ -46,9 +46,9 @@ namespace IndustryFour.Server.Services
 
             foreach (var textChunk in textChunks)
             {
-                _logger.LogInfo($"Process chunk: {chunkIndex++} (length: {textChunk.Length})");
+                _logger.LogInformation($"Process chunk: {chunkIndex++} (length: {textChunk.Length})");
 
-                _logger.LogInfo($"Embedding chunk");
+                _logger.LogInformation($"Embedding chunk");
                 var embedding = await _embeddingProvider.EmbedChunk(textChunk);
 
                 var chunk = new Chunk
@@ -58,7 +58,7 @@ namespace IndustryFour.Server.Services
                     DocumentId = document.Id
                 };
 
-				_logger.LogInfo($"Add chunk");
+				_logger.LogInformation($"Add chunk");
 				await _chunkService.Add(chunk);
             }
         }

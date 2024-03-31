@@ -10,11 +10,11 @@ namespace IndustryFour.Server.Controllers;
 [ApiController]
 public class DocumentsController : Controller
 {
-    private readonly ILoggerManager _logger;
+    private readonly ILogger<DocumentsController> _logger;
     private readonly IDocumentService _documentService;
     private readonly IMapper _mapper;
 
-    public DocumentsController(IMapper mapper, IDocumentService documentService, ILoggerManager logger)
+    public DocumentsController(IMapper mapper, IDocumentService documentService, ILogger<DocumentsController> logger)
     {
         _mapper = mapper;
         _documentService = documentService;
