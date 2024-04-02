@@ -40,7 +40,8 @@ try
                 builder
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("*");
             });
     });
 
