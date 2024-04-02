@@ -34,7 +34,7 @@ try
 
     builder.Services.AddCors(options =>
     {
-        options.AddDefaultPolicy(
+        options.AddPolicy("OpenPolicy",
             builder =>
             {
                 builder
@@ -90,7 +90,7 @@ try
     }
 
     app.UseHttpsRedirection();
-    app.UseCors();
+    app.UseCors("OpenPolicy");
     app.UseAuthorization();
 
     app.UseStaticFiles(new StaticFileOptions
