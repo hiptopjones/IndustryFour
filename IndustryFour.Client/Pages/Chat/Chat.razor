@@ -1,8 +1,34 @@
 ﻿@page "/chat"
 
-<PageTitle>Industry 4.0 - Chat</PageTitle>
+<PageTitle>Industry 4.0</PageTitle>
 
-<h1>Chat with Walker</h1>
+<h1>Expert Chat: <b>Walker Reynolds</b></h1>
+
+<div class="row user-message">
+    <div class="row p-3">
+        <div class="col-1 text-center">
+            <img class="chat-icon rounded-circle" src="images/user.png" title="User" />
+        </div>
+        <div class="col-11">
+            <div class="p-2">
+                <em><b>User@(Random.Shared.Next() % 1000)</b> has joined the conversation.</em>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row assistant-message">
+    <div class="row p-3">
+        <div class="col-1 text-center">
+            <img class="chat-icon rounded-circle" src="images/walker.png" title="Assistant" />
+        </div>
+        <div class="col-11">
+            <div class="p-2">
+                <em><b>Walker</b> has joined the conversation.</em>
+            </div>
+        </div>
+    </div>
+</div>
 
 @foreach (var message in Messages)
 {
@@ -86,7 +112,7 @@
                         This tool is only intended to guide your research.  Use good judgement and validate important details when following any advice provided here.
                     </p>
                 </div>
-                <button type="submit" class="btn btn-primary" disabled="@IsTaskRunning">Ask Question!</button>
+                <button type="submit" class="btn btn-primary" disabled="@IsSubmitDisabled">Ask Question!</button>
             </EditForm>
         </div>
     </div>

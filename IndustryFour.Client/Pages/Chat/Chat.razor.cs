@@ -18,6 +18,8 @@ namespace IndustryFour.Client.Pages.Chat
         private ChatResponseDto Response { get; set; }
         private string Error { get; set; }
         private bool IsTaskRunning { get; set; }
+        private bool IsSubmitDisabled => 
+            IsTaskRunning || string.IsNullOrWhiteSpace(Request.Question);
 
         private Stopwatch Stopwatch { get; set; }
 
