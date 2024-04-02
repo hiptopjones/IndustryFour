@@ -113,6 +113,7 @@
                     </p>
                 </div>
                 <button type="submit" class="btn btn-primary" disabled="@IsSubmitDisabled">Ask Question!</button>
+                <button type="button" class="btn btn-secondary" disabled="@IsTaskRunning" @onclick="OnNewChatClicked">New Chat</button>
             </EditForm>
         </div>
     </div>

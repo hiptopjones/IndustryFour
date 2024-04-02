@@ -1,5 +1,6 @@
 using IndustryFour.Shared.Dtos.Chat;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System.Diagnostics;
 using System.Net.Http.Json;
 
@@ -15,7 +16,6 @@ namespace IndustryFour.Client.Pages.Chat
 
         private List<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
         private ChatRequestDto Request { get; set; } = new ChatRequestDto();
-        private ChatResponseDto Response { get; set; }
         private string Error { get; set; }
         private bool IsTaskRunning { get; set; }
         private bool IsSubmitDisabled => 
@@ -30,7 +30,6 @@ namespace IndustryFour.Client.Pages.Chat
             Stopwatch = Stopwatch.StartNew();
 
             IsTaskRunning = true;
-            Response = null;
             Error = null;
 
             Messages.Add(new ChatMessage
@@ -58,24 +57,24 @@ namespace IndustryFour.Client.Pages.Chat
             Logger.LogInformation("Submit end");
         }
 
-        private async Task OnPromptSubmitted(ChatRequestDto request)
+        private async Task OnPromptSubmitted(ChatRequestDto requestDto)
         {
             Logger.LogInformation("Submit handler started");
 
             try
             {
-                var response = await HttpClient.PostAsJsonAsync("chat", request);
-                if (response.IsSuccessStatusCode)
+                var httpResponse = await HttpClient.PostAsJsonAsync("chat", requestDto);
+                if (httpResponse.IsSuccessStatusCode)
                 {
-                    Response = await response.Content.ReadFromJsonAsync<ChatResponseDto>();
-                    Messages.Last().AssistantMessage = Response;
+                    var response = await httpResponse.Content.ReadFromJsonAsync<ChatResponseDto>();
+                    Messages.Last().AssistantMessage = response;
 
                     // Always transfer this across to track turns in a conversation
-                    Request.ConversationId = Response.ConversationId;
+                    Request.ConversationId = response.ConversationId;
                 }
                 else
                 {
-                    Error = await response.Content.ReadAsStringAsync();
+                    Error = await httpResponse.Content.ReadAsStringAsync();
                     Messages.Last().ErrorMessage = Error;
                 }
             }
@@ -92,6 +91,12 @@ namespace IndustryFour.Client.Pages.Chat
             }
 
             Logger.LogInformation("Submit handler ended ");
+        }
+
+        private void OnNewChatClicked(MouseEventArgs e)
+        {
+            Messages.Clear();
+            Request.ConversationId = 0;
         }
     }
 }

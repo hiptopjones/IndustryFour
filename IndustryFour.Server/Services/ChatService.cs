@@ -31,6 +31,7 @@ namespace IndustryFour.Server.Services
 
             Stopwatch overallTimer = Stopwatch.StartNew();
 
+            await AugmentQuestion(request, response);
             await SimilaritySearch(request, response);
             await GeneratePrompt(request, response);
             await SendPrompt(request, response);
@@ -41,6 +42,40 @@ namespace IndustryFour.Server.Services
             await _turns.Update(turn);
 
             return response;
+        }
+
+        private async Task AugmentQuestion(ChatRequest request, ChatResponse response)
+        {
+            request.OriginalQuestion = request.Question;
+
+            var allTurns = (await _turns.GetByConversationId(request.ConversationId)).ToList();
+            if (allTurns.Count < 2)
+            {
+                // This is the first turn
+                return;
+            }
+
+            Turn previousTurn = allTurns.TakeLast(2).FirstOrDefault();
+            if (previousTurn?.Response == null)
+            {
+                // Incomplete or error on last turn
+                return;
+            }
+
+            var prompt = $"""
+                Given the following context and the provided question, clarify the question to remove ambiguity in entity references.
+
+                Context:
+                {previousTurn.Response.Answer}
+
+                Question:
+                {request.OriginalQuestion}
+
+                Clarified Question:
+                """;
+
+            var answer = await _chat.Chat(prompt);
+            request.Question = answer;
         }
 
         private async Task SimilaritySearch(ChatRequest request, ChatResponse response)
