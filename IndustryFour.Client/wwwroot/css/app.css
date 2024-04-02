@@ -77,3 +77,8 @@ h1:focus {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
     }
+
+.social-icon {
+    width: 30px;
+    height: auto;
+}
