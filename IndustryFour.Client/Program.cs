@@ -18,6 +18,8 @@ builder.Services.AddHttpClient("CoreAPI", (provider, client) =>
 {
     client.BaseAddress = new Uri($"{apiConfiguration.BaseAddress}/api/");
     client.EnableIntercept(provider);
+
+    client.DefaultRequestHeaders.Add("ngrok-skip-browser-warning", "123"); // Needed to bypass ngrok abuse interstitial
 });
 
 builder.Services.AddScoped(provider => provider.GetService<IHttpClientFactory>().CreateClient("CoreAPI"));
