@@ -24,7 +24,9 @@ namespace IndustryFour.Client.Pages.Documents
 
         private async Task GetDocuments()
         {
-            DocumentResults = await DocumentRepository.GetAll();
+            DocumentResults = (await DocumentRepository.GetAll())
+                .OrderBy(x => x.PublishDate)
+                .ToList();
         }
 
         private async Task DeleteDocument(int id)

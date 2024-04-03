@@ -21,7 +21,7 @@ namespace IndustryFour.Server.Controllers
 
 			var targetFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
 			var targetFilePath = Path.Combine(targetDirectoryPath, targetFileName);
-			var urlPath = Path.Combine(targetFolder, targetFileName);
+			var urlPath = Path.Combine(targetFolder, targetFileName).Replace("\\", "/");
 
 			using (var stream = new FileStream(targetFilePath, FileMode.Create))
 			{

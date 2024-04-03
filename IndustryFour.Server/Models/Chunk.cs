@@ -10,6 +10,9 @@ public class Chunk : Entity
     [JsonIgnore]
     public Vector Embedding { get; set; }
 
+    public int NextChunkId { get; set; }
+    public int PreviousChunkId { get; set; }
+
     public int DocumentId { get; set; }
 
     // EF Relations

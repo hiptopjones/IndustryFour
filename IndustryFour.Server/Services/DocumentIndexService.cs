@@ -43,6 +43,7 @@ namespace IndustryFour.Server.Services
             }
 
             int chunkIndex = 0;
+            List<Chunk> chunks = new List<Chunk>();
 
             foreach (var textChunk in textChunks)
             {
@@ -60,6 +61,28 @@ namespace IndustryFour.Server.Services
 
 				_logger.LogInformation($"Add chunk");
 				await _chunkService.Add(chunk);
+
+                chunks.Add(chunk);
+            }
+
+            // Add links to the next and previous chunks, so they can easily be pulled in if desired
+            for (int i = 0; i < chunks.Count; i++)
+            {
+                if (i > 0)
+                {
+                    chunks[i].PreviousChunkId = chunks[i - 1].Id;
+                }
+
+                if (i < chunks.Count - 1)
+                {
+                    chunks[i].NextChunkId = chunks[i + 1].Id;
+                }
+            }
+
+            // Persist the linkage changes
+            foreach (var chunk in chunks)
+            {
+                await _chunkService.Update(chunk);
             }
         }
 
@@ -78,7 +101,25 @@ namespace IndustryFour.Server.Services
 			float[] embedding = await _embeddingProvider.EmbedChunk(text);
             Vector vector = new Vector(embedding);
 
-            var chunkMatches = await _chunkService.GetByDistance(vector, k);
+            var chunkMatches = (await _chunkService.GetByDistance(vector, k)).ToList();
+
+            for (int i = chunkMatches.Count - 1; i >= 0; i--)
+            {
+                var chunkMatch = chunkMatches[i];
+
+                if (chunkMatch.Chunk.NextChunkId != 0)
+                {
+                    Chunk nextChunk = await _chunkService.GetById(chunkMatch.Chunk.NextChunkId);
+                    chunkMatches.Insert(i + 1, new ChunkMatch { Chunk = nextChunk });
+                }
+
+                if (chunkMatch.Chunk.PreviousChunkId != 0)
+                {
+                    Chunk previousChunk = await _chunkService.GetById(chunkMatch.Chunk.PreviousChunkId);
+                    chunkMatches.Insert(i, new ChunkMatch { Chunk = previousChunk });
+                }
+            }
+
             return chunkMatches;
         }
     }

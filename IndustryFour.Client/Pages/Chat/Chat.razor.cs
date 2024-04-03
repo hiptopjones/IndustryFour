@@ -1,6 +1,8 @@
 using IndustryFour.Shared.Dtos.Chat;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System.Diagnostics;
 using System.Net.Http.Json;
 
@@ -14,6 +16,20 @@ namespace IndustryFour.Client.Pages.Chat
         [Inject]
         private HttpClient HttpClient { get; set; }
 
+        [Inject]
+        private IJSRuntime JSRuntime { get; set; }
+
+        // TODO: Populate from database, maybe using real questions
+        private List<string> SampleQuestions { get; set; } = new List<string>
+        {   
+            "How do I get started with digital transformation?",
+            "How can I start collecting data?",
+            "What is an IIoT platform?",
+            "What is the automation stack?",
+            "What is an Industry 4.0 company?",
+            "What are the problems associated with digital thread architecture?",
+        };
+
         private List<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
         private ChatRequestDto Request { get; set; } = new ChatRequestDto();
         private string Error { get; set; }
@@ -22,6 +38,16 @@ namespace IndustryFour.Client.Pages.Chat
             IsTaskRunning || string.IsNullOrWhiteSpace(Request.Question);
 
         private Stopwatch Stopwatch { get; set; }
+
+        private InputText QuestionInput { get; set; }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (QuestionInput.Element.HasValue)
+            {
+                await QuestionInput.Element.Value.FocusAsync();
+            }
+        }
 
         private async Task Submit()
         {
@@ -97,6 +123,12 @@ namespace IndustryFour.Client.Pages.Chat
         {
             Messages.Clear();
             Request.ConversationId = 0;
+        }
+
+        private async Task OnSampleQuestion(string question)
+        {
+            Request.Question = question;
+            await Submit();
         }
     }
 }

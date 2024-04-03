@@ -27,7 +27,9 @@ namespace IndustryFour.Client.Pages.Documents
 
         private async Task GetChunks()
         {
-            ChunkResults = await ChunkRepository.GetByDocumentId(DocumentId);
+            ChunkResults = (await ChunkRepository.GetByDocumentId(DocumentId))
+                .OrderBy(x => x.Id)
+                .ToList();
         }
 
         public void Dispose() => Interceptor.DisposeEvent();
