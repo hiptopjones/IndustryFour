@@ -68,6 +68,7 @@ try
             chunkOverlap: 300));
     builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();
     builder.Services.AddScoped<IChatProvider, OpenAiChatProvider>();
+    //builder.Services.AddScoped<IChatProvider, OllamaChatProvider>();
 
     builder.Services.AddNpgsql<DocumentStoreDbContext>(builder.Configuration.GetConnectionString("sqlConnection"));
 
