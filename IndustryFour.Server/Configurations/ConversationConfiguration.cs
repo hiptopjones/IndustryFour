@@ -10,17 +10,15 @@ public class ConversationConfiguration : IEntityTypeConfiguration<Conversation>
     {
         builder.HasKey(b => b.Id);
 
-		builder.Property(b => b.Id)
-			.IsRequired()
-			.HasColumnName("id");
+        builder.Property(b => b.Id)
+            .IsRequired();
 
         builder.Property(b => b.Timestamp)
             .HasConversion
             (
                 src => src.Kind == DateTimeKind.Utc ? src : DateTime.SpecifyKind(src, DateTimeKind.Utc),
                 dst => dst.Kind == DateTimeKind.Utc ? dst : DateTime.SpecifyKind(dst, DateTimeKind.Utc)
-            )
-            .HasColumnName("timestamp");
+            );
 
         builder.ToTable("conversations");
     }

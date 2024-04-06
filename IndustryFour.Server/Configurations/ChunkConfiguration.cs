@@ -11,29 +11,23 @@ public class ChunkConfiguration : IEntityTypeConfiguration<Chunk>
         builder.HasKey(b => b.Id);
 
         builder.Property(b => b.Id)
-            .IsRequired()
-            .HasColumnName("id");
+            .IsRequired();
 
         builder.Property(b => b.Content)
-            .IsRequired()
-            .HasColumnName("content");
+            .IsRequired();
 
         builder.Property(b => b.Embedding)
             .IsRequired()
-            .HasColumnType("vector(768)")
-            .HasColumnName("embedding");
+            .HasColumnType("vector(768)");
 
         builder.Property(b => b.DocumentId)
-            .IsRequired()
-            .HasColumnName("document_id");
+            .IsRequired();
 
         builder.Property(b => b.NextChunkId)
-            .IsRequired()
-            .HasColumnName("next_chunk_id");
+            .IsRequired();
 
         builder.Property(b => b.PreviousChunkId)
-            .IsRequired()
-            .HasColumnName("previous_chunk_id");
+            .IsRequired();
 
         builder.ToTable("chunks");
     }

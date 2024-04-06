@@ -11,12 +11,10 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 		builder.HasKey(b => b.Id);
 
 		builder.Property(b => b.Id)
-			.IsRequired()
-			.HasColumnName("id");
+			.IsRequired();
 
 		builder.Property(b => b.Name)
-            .IsRequired()
-			.HasColumnName("name");
+            .IsRequired();
 
 		builder.HasMany(c => c.Documents)
 			.WithOne(b => b.Category)

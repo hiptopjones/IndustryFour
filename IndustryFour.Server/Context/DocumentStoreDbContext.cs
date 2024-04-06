@@ -1,6 +1,5 @@
 ﻿using IndustryFour.Server.Models;
 using Microsoft.EntityFrameworkCore;
-using static OllamaSharp.OllamaApiClient;
 
 namespace IndustryFour.Server.Context;
 
@@ -24,8 +23,10 @@ public class DocumentStoreDbContext : DbContext
 			.AddJsonFile("appsettings.json").Build();
 
 		var connectionString = configuration.GetConnectionString("sqlConnection");
-		optionsBuilder.UseNpgsql(connectionString, x => x.UseVector());
-	}
+        optionsBuilder
+            .UseNpgsql(connectionString, x => x.UseVector())
+            .UseSnakeCaseNamingConvention();
+    }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

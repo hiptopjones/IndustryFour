@@ -11,39 +11,31 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
         builder.HasKey(b => b.Id);
 
 		builder.Property(b => b.Id)
-			.IsRequired()
-			.HasColumnName("id");
+			.IsRequired();
 
         builder.Property(b => b.Title)
-            .IsRequired()
-			.HasColumnName("title");
+            .IsRequired();
 
 		builder.Property(b => b.Author)
-			.IsRequired()
-			.HasColumnName("author");
+			.IsRequired();
 
 		builder.Property(b => b.Description)
-			.IsRequired()
-			.HasColumnName("description");
+			.IsRequired();
 
 		builder.Property(b => b.ContentUrl)
-			.IsRequired()
-			.HasColumnName("content_url");
+			.IsRequired();
 
-		builder.Property(b => b.SourceUrl)
-			.HasColumnName("source_url");
+		builder.Property(b => b.SourceUrl);
 
 		builder.Property(b => b.PublishDate)
 			.HasConversion
 			(
 				src => src.Kind == DateTimeKind.Utc ? src : DateTime.SpecifyKind(src, DateTimeKind.Utc),
 				dst => dst.Kind == DateTimeKind.Utc ? dst : DateTime.SpecifyKind(dst, DateTimeKind.Utc)
-			)
-			.HasColumnName("publish_date");
+			);
 
         builder.Property(b => b.CategoryId)
-			.IsRequired()
-			.HasColumnName("category_id");
+			.IsRequired();
 
 		builder.ToTable("documents");
     }
