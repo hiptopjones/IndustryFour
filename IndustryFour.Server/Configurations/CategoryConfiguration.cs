@@ -31,11 +31,16 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 				Id = 1,
 				Name = "YouTube Video"
 			},
-			new Category
-			{
-				Id = 2,
-				Name = "LinkedIn Post"
-			}
-		);
+            new Category
+            {
+                Id = 2,
+                Name = "LinkedIn Post"
+            },
+            new Category
+            {
+                Id = 3,
+                Name = "Spotify Podcast"
+            }
+        );
 	}
 }
