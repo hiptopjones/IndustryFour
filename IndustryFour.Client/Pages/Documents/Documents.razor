@@ -1,5 +1,6 @@
 ﻿@page "/documents"
 @using IndustryFour.Client.Components
+@inject IWebAssemblyHostEnvironment HostEnvironment
 
 <PageTitle>Industry 4.0</PageTitle>
 
@@ -10,7 +11,10 @@
         @*Place for search and sort*@
     </div>
     <div class="col-md-2">
-        @* <a class="btn btn-success mb-1" href="/documents/create">Create Document</a> *@
+        @if (HostEnvironment.IsDevelopment())
+        {
+            <a class="btn btn-success mb-1" href="/documents/create">Create Document</a>
+        }
     </div>
 </div>
 <div class="row">

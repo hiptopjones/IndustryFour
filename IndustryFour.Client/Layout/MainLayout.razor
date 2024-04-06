@@ -1,6 +1,7 @@
 ﻿@using Blazored.Toast.Configuration
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@inject IWebAssemblyHostEnvironment HostEnvironment
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -14,25 +15,28 @@
                     <li class="nav-item">
                         <a class="nav-link @GetActive("/", isPrefixMatch: false)" href="/">
                             Home
-                            <hr/>
+                            <hr />
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @GetActive("/chat")" href="/chat">
                             Chat
-                            <hr/>
-                        </a>
-                    </li>
-                    @* <li class="nav-item">
-                        <a class="nav-link @GetActive("/documents")" href="/documents">
-                            Documents
                             <hr />
                         </a>
-                    </li> *@
+                    </li>
+                    @if (HostEnvironment.IsDevelopment())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @GetActive("/documents")" href="/documents">
+                                Documents
+                                <hr />
+                            </a>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link @GetActive("/about")" href="/about">
                             About
-                            <hr/>
+                            <hr />
                         </a>
                     </li>
                 </ul>
@@ -50,10 +54,10 @@
                     Timeout="10"
                     IconType="IconType.FontAwesome"
                     SuccessIcon="oi oi-thumb-up"
-                    ErrorIcon="oi oi-bug"/>
+                    ErrorIcon="oi oi-bug" />
 </main>
 
-@code{
+@code {
     public string GetActive(string href, bool isPrefixMatch = true)
     {
         Uri uri = new Uri(NavigationManager.Uri);
