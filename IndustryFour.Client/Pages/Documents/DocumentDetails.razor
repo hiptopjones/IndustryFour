@@ -36,12 +36,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <strong>Content:</strong> <a href="@Document.ContentUrl" target="_blank">@Document.ContentUrl</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <strong>Chunks:</strong> <a href="/documents/@Document.Id/chunks">Document Chunks</a>
+                <strong>
+                    <a href="@Document.ContentUrl" target="_blank">Document Content</a>
+                    <br />
+                    <a href="/documents/@Document.Id/chunks">Document Chunks</a>
+                </strong>
             </div>
         </div>
     </div>

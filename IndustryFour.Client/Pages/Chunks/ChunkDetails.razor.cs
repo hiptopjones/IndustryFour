@@ -19,10 +19,17 @@ namespace IndustryFour.Client.Pages.Chunks
         [Parameter]
         public int ChunkId { get; set; }
 
+        // MarkupString so we can embed HTML
+        private MarkupString ChunkContentWithEmbeddedText { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             Chunk = await ChunkRepository.GetById(ChunkId);
             Document = await DocumentRepository.GetById(Chunk.DocumentId);
+
+            // Highlight the embedded text inside of the content
+            var chunkContent = Chunk.Content.Replace(Chunk.EmbeddedText, $"<b>{Chunk.EmbeddedText}</b>");
+            ChunkContentWithEmbeddedText = new MarkupString(chunkContent);
         }
     }
 }

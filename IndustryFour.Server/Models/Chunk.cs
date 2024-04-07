@@ -7,11 +7,13 @@ public class Chunk : Entity
 {
     public string Content { get; set; }
 
-    [JsonIgnore]
-    public Vector Embedding { get; set; }
+    // The text used to generate the embedding is often different than the text provided for context
 
-    public int NextChunkId { get; set; }
-    public int PreviousChunkId { get; set; }
+    [JsonIgnore] // Ignore when storing the chunks in chat history
+    public string EmbeddedText { get; set; }
+
+    [JsonIgnore] // Ignore when storing the chunks in chat history
+    public Vector Embedding { get; set; }
 
     public int DocumentId { get; set; }
 

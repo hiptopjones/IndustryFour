@@ -63,7 +63,8 @@ try
     builder.Services.AddScoped<IChatService, ChatService>();
     builder.Services.AddScoped<ITextSplitter, TextSplitter>(sp =>
         new TextSplitter(
-            separator: ".",
+            sp.GetRequiredService<ILogger<TextSplitter>>(),
+            separator: ". ", // Include space so we don't split on 4.0
             chunkSize: 1000,
             chunkOverlap: 300));
     builder.Services.AddScoped<IEmbeddingProvider, OllamaEmbeddingProvider>();

@@ -1,67 +1,77 @@
-﻿namespace IndustryFour.Server.Retrieval
+﻿using System.Text;
+
+namespace IndustryFour.Server.Retrieval
 {
     public class TextSplitter : ITextSplitter
     {
-        private string Separator { get; }
-        private int ChunkSize { get; }
-        private int ChunkOverlap { get; }
+        private readonly ILogger<TextSplitter> _logger;
 
-        public TextSplitter(string separator, int chunkSize, int chunkOverlap)
+        private readonly string _separator;
+        private readonly int _chunkSize;
+        private readonly int _chunkOverlap;
+
+        public TextSplitter(ILogger<TextSplitter> logger, string separator, int chunkSize, int chunkOverlap)
         {
+            logger = logger ?? throw new ArgumentNullException(nameof(logger));
             ArgumentException.ThrowIfNullOrEmpty(separator, nameof(separator));
             if (chunkSize <= 0) throw new ArgumentException("Chunk size must be positive and non-zero", nameof(chunkSize));
             if (chunkOverlap < 0) throw new ArgumentException("Chunk overlap must be positive", nameof(chunkOverlap));
 
-            Separator = separator;
-            ChunkSize = chunkSize;
-            ChunkOverlap = chunkOverlap;
+            _logger = logger;
+            _separator = separator;
+            _chunkSize = chunkSize;
+            _chunkOverlap = chunkOverlap;
         }
 
-        public async Task<IEnumerable<string>> Split(string text)
+        public Task<IEnumerable<string>> Split(string text)
         {
-            string[] splits = text.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
-            return await MergeSplits(splits.ToList());
-        }
+            _logger.LogInformation($"TextLength: {text.Length}");
 
-        private async Task<List<string>> MergeSplits(List<string> splits)
-        {
-            List<string> chunks = new List<string>();
+            var chunks = new List<string>();
+            var chunkBuilder = new StringBuilder();
 
-            List<string> currentChunkSplits = new List<string>();
+            var startIndex = 0;
 
-            int splitIndex = 0;
-            while (true)
+            while (startIndex < text.Length)
             {
-                currentChunkSplits.Add(splits[splitIndex]);
-                splitIndex++;
-
-                if (splitIndex < splits.Count)
+                var endIndex = text.IndexOf(_separator, startIndex);
+                if (endIndex < 0)
                 {
-                    int currentTotalLength = currentChunkSplits.Sum(x => x.Length);
-                    int nextTotalLength = currentTotalLength + currentChunkSplits.Count * Separator.Length;
+                    // No more separators found, so take everything that remains
+                    var segmentText = text.Substring(startIndex);
+                    chunkBuilder.Append(segmentText);
 
-                    if (nextTotalLength > ChunkSize)
+                    var chunkText = chunkBuilder.ToString().Trim();
+                    if (!string.IsNullOrEmpty(chunkText))
                     {
-                        string chunk = string.Join(Separator, currentChunkSplits);
-                        chunks.Add(chunk);
-
-                        // TODO: Update splitIndex
-
-                        currentChunkSplits.Clear();
+                        chunks.Add(chunkText);
                     }
+
+                    break;
                 }
                 else
                 {
-                    string chunk = string.Join(Separator, currentChunkSplits);
-                    chunks.Add(chunk);
+                    endIndex = Math.Min(text.Length - 1, endIndex + _separator.Length);
 
-                    // All done
-                    break;
+                    var segmentText = text.Substring(startIndex, endIndex - startIndex);
+                    chunkBuilder.Append(segmentText);
+
+                    if (chunkBuilder.Length >= _chunkSize)
+                    {
+                        var chunkText = chunkBuilder.ToString().Trim();
+                        if (!string.IsNullOrEmpty(chunkText))
+                        {
+                            chunks.Add(chunkText);
+                        }
+
+                        chunkBuilder.Clear();
+                    }
+
+                    startIndex = endIndex;
                 }
             }
 
-            return await Task.FromResult(chunks);
+            return Task.FromResult(chunks.AsEnumerable());
         }
     }
-
 }

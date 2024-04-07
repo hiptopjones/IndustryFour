@@ -16,17 +16,14 @@ public class ChunkConfiguration : IEntityTypeConfiguration<Chunk>
         builder.Property(b => b.Content)
             .IsRequired();
 
+        builder.Property(b => b.EmbeddedText)
+            .IsRequired();
+
         builder.Property(b => b.Embedding)
             .IsRequired()
             .HasColumnType("vector(768)");
 
         builder.Property(b => b.DocumentId)
-            .IsRequired();
-
-        builder.Property(b => b.NextChunkId)
-            .IsRequired();
-
-        builder.Property(b => b.PreviousChunkId)
             .IsRequired();
 
         builder.ToTable("chunks");

@@ -55,6 +55,7 @@ namespace IndustryFour.Server.Services
                 var chunk = new Chunk
                 {
                     Content = textChunk,
+                    EmbeddedText = textChunk,
                     Embedding = new Vector(embedding),
                     DocumentId = document.Id
                 };
@@ -65,17 +66,17 @@ namespace IndustryFour.Server.Services
                 chunks.Add(chunk);
             }
 
-            // Add links to the next and previous chunks, so they can easily be pulled in if desired
+            // Add the next and previous chunks to this chunk's content
             for (int i = 0; i < chunks.Count; i++)
             {
                 if (i > 0)
                 {
-                    chunks[i].PreviousChunkId = chunks[i - 1].Id;
+                    chunks[i].Content = chunks[i - 1].EmbeddedText + " " + chunks[i].Content;
                 }
 
                 if (i < chunks.Count - 1)
                 {
-                    chunks[i].NextChunkId = chunks[i + 1].Id;
+                    chunks[i].Content = chunks[i].Content + " " + chunks[i + 1].EmbeddedText;
                 }
             }
 
@@ -102,24 +103,6 @@ namespace IndustryFour.Server.Services
             Vector vector = new Vector(embedding);
 
             var chunkMatches = (await _chunkService.GetByDistance(vector, k)).ToList();
-
-            for (int i = chunkMatches.Count - 1; i >= 0; i--)
-            {
-                var chunkMatch = chunkMatches[i];
-
-                if (chunkMatch.Chunk.NextChunkId != 0)
-                {
-                    Chunk nextChunk = await _chunkService.GetById(chunkMatch.Chunk.NextChunkId);
-                    chunkMatches.Insert(i + 1, new ChunkMatch { Chunk = nextChunk });
-                }
-
-                if (chunkMatch.Chunk.PreviousChunkId != 0)
-                {
-                    Chunk previousChunk = await _chunkService.GetById(chunkMatch.Chunk.PreviousChunkId);
-                    chunkMatches.Insert(i, new ChunkMatch { Chunk = previousChunk });
-                }
-            }
-
             return chunkMatches;
         }
     }
