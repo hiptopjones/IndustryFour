@@ -24,7 +24,7 @@ namespace IndustryFour.Client.Pages.Chat
         private List<string> SampleQuestions { get; set; } = new List<string>
         {   
             "How do I get started with digital transformation?",
-            "How can I start collecting data?",
+            //"How can I start collecting data?", // no good answers with the current data
             "What is an IIoT platform?",
             "What is the automation stack?",
             "What is an Industry 4.0 company?",
