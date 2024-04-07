@@ -10,6 +10,7 @@ public class DocumentStoreDbContext : DbContext
 	public DbSet<Chunk> Chunks { get; set; }
     public DbSet<Conversation> Conversations { get; set; }
     public DbSet<Turn> Turns { get; set; }
+    public DbSet<Question> Questions { get; set; }
 
     public DocumentStoreDbContext(DbContextOptions options)
         : base(options)

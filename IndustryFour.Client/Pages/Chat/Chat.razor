@@ -1,6 +1,5 @@
 ﻿@page "/chat"
 @using IndustryFour.Client.Components
-@inject IWebAssemblyHostEnvironment HostEnvironment
 
 <PageTitle>Industry 4.0</PageTitle>
 
@@ -69,15 +68,24 @@
                                     This is an AI-generated response.
                                     @if (HostEnvironment.IsDevelopment())
                                     {
-                                        <span>
-                                            Sources:
-                                            @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
-                                            {
-                                                <span class="px-1">
-                                                    [<a href="/chunks/@chunkMatch.Chunk.Id" target="_blank">@chunkMatch.Chunk.Id</a>]
-                                                </span>
-                                            }
-                                        </span>
+                                        @if (message.AssistantMessage.ChunkMatches.Any())
+                                        {
+                                            <span>
+                                                Sources:
+                                                @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
+                                                {
+                                                    <span class="px-1">
+                                                        [<a href="/chunks/@chunkMatch.Chunk.Id" target="_blank">@chunkMatch.Chunk.Id</a>]
+                                                    </span>
+                                                }
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                Source: Cache
+                                            </span>
+                                        }
                                     }
                                 </span>
                             </div>
@@ -110,6 +118,15 @@
                         This tool is only intended to guide your research.  Use good judgement and validate important details when following any advice provided here.
                     </p>
                 </div>
+                @if (HostEnvironment.IsDevelopment())
+                {
+                    <div class="form-check form-switch mb-3">
+                        <InputCheckbox class="form-check-input" id="useCacheCheck" @bind-Value="Request.UseCache" />
+                        <label class="form-check-label" for="useCacheCheck">
+                            Use Cache
+                        </label>
+                    </div>
+                }
                 <button type="submit" class="btn btn-primary" disabled="@IsSubmitDisabled">Ask Question!</button>
                 <button type="button" class="btn btn-secondary" disabled="@IsTaskRunning" @onclick="OnNewChatClicked">New Chat</button>
             </EditForm>

@@ -2,6 +2,7 @@ using IndustryFour.Shared.Dtos.Chat;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using System.Diagnostics;
 using System.Net.Http.Json;
@@ -17,7 +18,7 @@ namespace IndustryFour.Client.Pages.Chat
         private HttpClient HttpClient { get; set; }
 
         [Inject]
-        private IJSRuntime JSRuntime { get; set; }
+        private IWebAssemblyHostEnvironment HostEnvironment { get; set; }
 
         // TODO: Populate from database, maybe using real questions
         private List<string> SampleQuestions { get; set; } = new List<string>
@@ -40,6 +41,11 @@ namespace IndustryFour.Client.Pages.Chat
         private Stopwatch Stopwatch { get; set; }
 
         private InputText QuestionInput { get; set; }
+
+        protected override void OnInitialized()
+        {
+            Request.UseCache = HostEnvironment.IsDevelopment();
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -69,9 +75,10 @@ namespace IndustryFour.Client.Pages.Chat
                 IsUserMessage = false
             });
 
-            // Copy and then clear the request
+            // Copy and then clear the request (maintaining any important settings)
             var request = Request;
             Request = new ChatRequestDto();
+            Request.UseCache = request.UseCache;
 
             // Forces a render so the button gets disabled immediately
             await Task.Delay(1);

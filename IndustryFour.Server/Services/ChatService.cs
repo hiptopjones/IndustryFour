@@ -10,17 +10,20 @@ namespace IndustryFour.Server.Services
         private readonly IChatProvider _chat;
         private readonly IConversationService _conversations;
         private readonly ITurnService _turns;
+        private readonly IQuestionService _questions;
 
         public ChatService(
             IDocumentIndexService index,
             IChatProvider chat,
             IConversationService conversations,
-            ITurnService turns)
+            ITurnService turns,
+            IQuestionService questions)
         {
             _index = index;
             _chat = chat;
             _conversations = conversations;
             _turns = turns;
+            _questions = questions;
         }
 
         public async Task<ChatResponse> AskQuestion(ChatRequest request)
@@ -31,14 +34,35 @@ namespace IndustryFour.Server.Services
 
             Stopwatch overallTimer = Stopwatch.StartNew();
 
-            await AugmentQuestion(request, response);
-            await SimilaritySearch(request, response);
-            await GeneratePrompt(request, response);
-            await SendPrompt(request, response);
+            if (request.UseCache)
+            {
+                var question = await _questions.GetByQuestionText(request.Question);
+                if (question != null)
+                {
+                    response.Answer = question.AnswerText;
+                }
+            }
+
+            // Cache disabled or question not found
+            if (string.IsNullOrEmpty(response.Answer))
+            {
+                await AugmentQuestion(request, response);
+                await SimilaritySearch(request, response);
+                await GeneratePrompt(request, response);
+                await SendPrompt(request, response);
+
+                await _questions.Add(new Question
+                {
+                    QuestionText = request.Question,
+                    AnswerText = response.Answer,
+                    Timestamp = DateTime.Now,
+                    TurnId = turn.Id
+                });
+            }
 
             response.ResponseDuration = overallTimer.Elapsed;
 
-            turn.Response = response;
+            // This must be after all manipulation of request/response
             await _turns.Update(turn);
 
             return response;
@@ -134,6 +158,7 @@ namespace IndustryFour.Server.Services
             Turn turn = new Turn
             {
                 Request = request,
+                Response = response,
                 ConversationId = conversation.Id,
                 Timestamp = DateTime.Now
             };
