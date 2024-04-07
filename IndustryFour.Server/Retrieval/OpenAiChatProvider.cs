@@ -17,7 +17,7 @@ namespace IndustryFour.Server.Retrieval
         public async Task<string> Chat(string prompt)
         {
 
-            var chatRequest = new ChatRequest(new[] { new Message(Role.User, prompt) }, Model.GPT4);
+            var chatRequest = new ChatRequest(new[] { new Message(Role.User, prompt) }, Model.GPT3_5_Turbo);
             var response = await _client.ChatEndpoint.GetCompletionAsync(chatRequest);
             var choice = response.FirstChoice;
 

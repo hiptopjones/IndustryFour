@@ -87,6 +87,22 @@
                                             </span>
                                         }
                                     }
+                                    else
+                                    {
+                                        <span>
+                                            @{
+                                                int sourceIndex = 1;
+                                            }
+
+                                            Sources:
+                                            @foreach (var chunkMatch in message.AssistantMessage.ChunkMatches)
+                                            {
+                                                <span class="px-1">
+                                                    [<a href="@chunkMatch.Chunk.Document.SourceUrl" target="_blank">@(sourceIndex++)</a>]
+                                                </span>
+                                            }
+                                        </span>
+                                    }
                                 </span>
                             </div>
                         }

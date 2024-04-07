@@ -8,5 +8,6 @@ namespace IndustryFour.Shared.Dtos.Chunk
         public string Content { get; set; }
         public string EmbeddedText { get; set; }
         public int DocumentId { get; set; }
+        public DocumentResultDto Document { get; set; }
     }
 }
